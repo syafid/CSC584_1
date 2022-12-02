@@ -6,9 +6,11 @@ public class Customer {
 	public String CusMyKad;
 	public String CusPhoneNo;
 	public String CusEmail;
+	public String CusPasswd;
 	public int CusCarType;
 	public String CusCarPlate;
 	public int CusCurrMileage;
+	
 	
 	public int getCusID() {
 		
@@ -64,6 +66,12 @@ public class Customer {
 	        return "[" + CusName + "," + CusMyKad + "]";
 	       
 	    }
+	public String getCusPasswd() {
+		return CusPasswd;
+	}
+	public void setCusPasswd(String cusPasswd) {
+		CusPasswd = cusPasswd;
+	}
 	
 
 }

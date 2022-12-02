@@ -1,4 +1,4 @@
-package car;
+package login;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -6,21 +6,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-import appointment.DaoAppointment;
-
 /**
- * Servlet implementation class CarServlet
+ * Servlet implementation class LogoutServlet
  */
-//@WebServlet("/CarServlet")
-public class CarServlet extends HttpServlet {
+//@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CarServlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,10 +31,14 @@ public class CarServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.setAttribute("car", new DaoCar().getResultSet());
-		RequestDispatcher dis=getServletContext().getRequestDispatcher("/registration/NewCustomer.jsp");
-		 dis.forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		 HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            session.removeAttribute("email");
+	             
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/login/login.jsp");
+	            dispatcher.forward(request, response);
+	        }
 	}
 
 	/**

@@ -62,9 +62,86 @@ public class DaoUser {
 			return service;
 	}
 	
+	public ArrayList<User> getUserSet() {
+
+
+		ArrayList<User> userArr = new ArrayList<User>();
+
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
+			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 String sql = "SELECT userID, userName, userAccessLevel FROM user where userAccessLevel = 'technician';";
+	         Statement statement = conn.createStatement();
+	         ResultSet result = statement.executeQuery(sql);
+	         User userA = new User();
+	         
+	         while (result.next()) {
+	        	
+	        	 
+		         userA.setUserID(result.getInt("userID"));
+		         userA.setUserName(result.getString("userName"));
+		         userA.setUserAccessLevel(result.getString("userAccessLevel"));
+	             userArr.add(userA);
+	            
+	             }
+		}
+		catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return userArr;
+}
 //	
+	public ArrayList<User> getUser(int UserID) {
 
+//		String url = "jdbc:mysql:/csc584";
+//	    String user = "root";
+//	    String password = "p@ssw0rd1234";
+		//Connection conn;// = null;
+		ArrayList<User> userDetail = new ArrayList<User>();
 
+		try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
+			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 String sql = "SELECT userID, userName, userIdentificationNo, userContactNo, userDateOfBirth, userEmail, userPassword, userAccessLevel FROM user where userID ='" +UserID+ "';";
+	         Statement statement = conn.createStatement();
+	         ResultSet result = statement.executeQuery(sql);
+	         User user = new User();
+	         while (result.next()) {
+	        	 //int i = 0;
+	//        	 serviceID = result.getInt("serviceID");
+	//        	 serviceName = result.getString("serviceName");
+	//        	 AppointmentAdd appAdd = new AppointmentAdd(result.getInt("serviceID"),result.getString("serviceName"));
+	        	 
+	        	 user.setUserID(result.getInt("userID"));
+	        	 user.setUserName(result.getString("userName"));
+	        	 user.setUserIdentificationNo(result.getString("userIdentificationNo"));
+	        	 user.setUserContactNo(result.getString("userContactNo"));
+	        	 user.setUserEmail(result.getString("userEmail"));
+	        	 user.setUserPassword(result.getString("userPassword"));
+	        	 user.setUserAccessLevel(result.getString("userAccessLevel"));
+	        	 
+	             userDetail.add(user);
+	             System.out.println(sql);
+	             }
+		}
+		catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return userDetail;
+}
+//
 	public String CreateUser(ArrayList<User> newuser) throws SQLException {
 		Connection conn = null;
 		String encryptedpassword = null;  
@@ -86,7 +163,8 @@ public class DaoUser {
 			MessageDigest m = MessageDigest.getInstance("MD5"); 
 			m.update(userpass.getBytes());  
 			byte[] bytes = m.digest();  
-			StringBuilder s = new StringBuilder();  
+			//StringBuilder s = new StringBuilder();  
+			StringBuilder s = new StringBuilder(newuser.get(i).getUserIdentificationNo());
             for(int x=0; x< bytes.length ;x++)  
             {  
                 s.append(Integer.toString((bytes[x] & 0xff) + 0x100, 16).substring(1));  

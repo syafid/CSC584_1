@@ -33,11 +33,11 @@
  					</div>
  					<div class="form-group row"> 
 					 	<label for="userEmail" class="col-sm-3 col-form-label">User Email</label>
-					 	<input type="text" name="userEmail" size="50" maxlength="50" required="required"><p class="text-danger"> *This email will use to login system </p>
+					 	<input type="text" name="userEmail" size="50" maxlength="50" required="required"><p class="text-danger"> *This email will use to login Proton Service Center Appointment System </p>
  					</div>
  					<div class="form-group row"> 
 					 	<label for="userPassword" class="col-sm-3 col-form-label">User Password</label>
-					 	<input type="password" name="userPassword" size="8" maxlength="8" required="required"><p class="text-danger"> *8 character password </p>
+					 	<input type="password" name="userPassword" size="8" maxlength="8" required="required"><p class="text-danger"> *8 character password only</p>
  					</div>
  				
  				

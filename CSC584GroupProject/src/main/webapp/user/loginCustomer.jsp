@@ -11,28 +11,22 @@
 <body>
 <%if (request.getAttribute("message") == "alert-danger") { %>
 <div class="alert alert-danger" role="alert">
-  Incorrect Password or User Doesn't Exists. Please use a valid email and password to login in. Thank You
+  Incorrect Password or Customer Doesn't Exists. Please use a valid email and password to login in. Thank You
 </div>
 <%}%>
 <div class="login-page">
       <div class="form">
         <div class="login">
           <div class="login-header">
-            <h3>LOGIN</h3>
+            <h3>CUSTOMER LOGIN</h3>
             <p>Please enter your credentials to login.</p>
           </div>
         </div>
-        <form class="login-form" action="LoginServlet" method="post">
-<!--          <div class="form-group row" style="align-center">  -->
-<!--          <label for="radio" class="col-sm-2 col-form-label">Staff<input type="radio" name="login" value="1"></label> -->
-          
-<!--          <label for="radio" class="col-sm-2 col-form-label">Customer <input type="radio" name="login" value="2"></label> -->
-         
-<!--          </div> -->
-          <input type="text" name="email" placeholder="email"/>
-          <input type="password" name="password" placeholder="password"/>
+        <form class="login-form" action="CustomerLoginServlet" method="post">
+          <input type="text" name="emailCustomer" placeholder="email"/>
+          <input type="password" name="passwordCustomer" placeholder="password"/>
           <button type="submit" class="btn btn-primary">Log Me In</button>    
-          <p class="message">Not registered? <a href="">Create an account</a></p>
+          <p class="message">Not registered? <a href="CarServlet">Create an account</a></p>
         </form>
       </div>
     </div>

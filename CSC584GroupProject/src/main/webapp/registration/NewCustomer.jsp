@@ -16,30 +16,37 @@
 <h1>New Customer Registration</h1>
 <div class="card">
  <div class="card-body">
- <form action="CustomerServlet" method="get">
+ <form action="RegisterCustomerServlet" method="post">
  <div class="form-group row"> 
- 	<label for="custName" class="col-sm-4 col-form-label">Customer Name</label>
+ 	<label for="custName" class="col-sm-3 col-form-label">Full Name</label>
  	<input type="text" name="custName" size="50" maxlength="50" required="required">
  	
  </div>
  
   <div class="form-group row"> 
- 	<label for="custMyKad" class="col-sm-4 col-form-label">Customer MyKad</label>
+ 	<label for="custMyKad" class="col-sm-3 col-form-label">MyKad</label>
  	<input type="text" name="custMyKad" size="12" maxlength="12" required="required"><p class="text-danger">* without (-)</p>
  </div>
  
   <div class="form-group row"> 
- 	<label for="custPhoneNo" class="col-sm-4 col-form-label">Customer Mobile No</label>
+ 	<label for="custPhoneNo" class="col-sm-3 col-form-label">Mobile No</label>
  	<input type="text" name="custPhoneNo" size="10" maxlength="10" required="required">
  </div>
  
+
+ 
   <div class="form-group row"> 
- 	<label for="custEmail" class="col-sm-4 col-form-label">Customer Email</label>
- 	<input type="email" name="custEmail" size="20" maxlength="20" required="required">
+ 	<label for="custEmail" class="col-sm-3 col-form-label">Email</label>
+ 	<input type="email" name="custEmail" size="20" maxlength="20" required="required"><p class="text-danger">* This email will be use to login Service Appointment System</p>
+ </div>
+ 
+  <div class="form-group row"> 
+ 	<label for="custPasswd" class="col-sm-3 col-form-label">Password</label>
+ 	<input type="password" name="custPasswd" size="8" maxlength="8" required="required"><p class="text-danger">*8 character password only</p>
  </div>
  
  <div class="form-group row"> 
- <label for="car" class="col-sm-4 col-form-label">Pick Car Model/Variant</label>
+ <label for="car" class="col-sm-3 col-form-label">Select Car Model/Variant</label>
  
  <select name="car" id="car">
  <%ArrayList car = (ArrayList) request.getAttribute("car"); %>
@@ -56,12 +63,12 @@
 </div>
 
 <div class="form-group row"> 
- 	<label for="custCarPlate" class="col-sm-4 col-form-label">Customer Car Plate No</label>
+ 	<label for="custCarPlate" class="col-sm-3 col-form-label">Car Plate No</label>
  	<input type="text" name="custCarPlate" size="12" maxlength="12" required="required">
  </div>
  
  <div class="form-group row"> 
- 	<label for="custCarMileage" class="col-sm-4 col-form-label">Customer Car Mileage (KM)</label>
+ 	<label for="custCarMileage" class="col-sm-3 col-form-label">Current Car Mileage (KM)</label>
  	<input type="number" name="custCarMileage" size="6" maxlength="6">
  </div>
  

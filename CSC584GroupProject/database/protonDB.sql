@@ -1,0 +1,219 @@
+CREATE DATABASE  IF NOT EXISTS `csc584` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `csc584`;
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+--
+-- Host: localhost    Database: csc584
+-- ------------------------------------------------------
+-- Server version	8.0.20
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointment`
+--
+
+DROP TABLE IF EXISTS `appointment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `appointment` (
+  `appID` int NOT NULL AUTO_INCREMENT,
+  `appDateTime` timestamp NULL DEFAULT NULL,
+  `appStatus` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`appID`),
+  CONSTRAINT `empID` FOREIGN KEY (`appID`) REFERENCES `employee` (`empID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointment`
+--
+
+LOCK TABLES `appointment` WRITE;
+/*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `car`
+--
+
+DROP TABLE IF EXISTS `car`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `car` (
+  `carID` int NOT NULL AUTO_INCREMENT,
+  `carModel` varchar(10) DEFAULT NULL,
+  `carVariant` varchar(40) DEFAULT NULL,
+  `carTransmission` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`carID`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `car`
+--
+
+LOCK TABLES `car` WRITE;
+/*!40000 ALTER TABLE `car` DISABLE KEYS */;
+INSERT INTO `car` VALUES (1,'IRIZ','1.3L STANDARD CVT','AUTO'),(2,'IRIZ','1.6L EXECUTIVE CVT','AUTO'),(3,'IRIZ','1.6L ACTIVE CVT','AUTO'),(4,'PERSONA','1.6L STANDARD CVT','AUTO'),(5,'PERSONA','1.6L EXECUTIVE CVT','AUTO'),(6,'PERSONA','1.6L PREMIUM CVT','AUTO'),(7,'SAGA','1.3L STANDARD ','MANU'),(8,'SAGA','1.3L STANDARD','AUTO'),(9,'SAGA','1.3L PREMIUM','AUTO'),(10,'SAGA','1.3L PREMIUM S','AUTO'),(11,'X50','1.5T STANDARD','AUTO'),(12,'X50','1.5T PREMIUM','AUTO'),(13,'X50','1.5T EXECUTIVE','AUTO'),(19,'X70','1.5 TGDI STANDARD 2WD','AUTO'),(20,'X70','1.5 TGDI EXECUTIVE 2WD','AUTO'),(21,'X70','1.5 TGDI EXECUTIVE AWD','AUTO'),(22,'X70','1.5 TGDI PREMIUM 2WD','AUTO'),(23,'X70','1.8 TGDI PREMIUM 2WD','AUTO');
+/*!40000 ALTER TABLE `car` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customer` (
+  `cusID` int NOT NULL AUTO_INCREMENT,
+  `cusName` varchar(50) NOT NULL,
+  `cusMyKad` varchar(12) NOT NULL,
+  `cusPhoneNo` varchar(10) DEFAULT NULL,
+  `cusEmail` varchar(20) NOT NULL,
+  `cusPasswd` varchar(256) NOT NULL,
+  `cusCarType` int NOT NULL,
+  `cusCarPlate` varchar(12) NOT NULL,
+  `cusCurrMileage` int DEFAULT NULL,
+  PRIMARY KEY (`cusID`),
+  UNIQUE KEY `cusMyKad_UNIQUE` (`cusMyKad`),
+  KEY `carID_idx` (`cusCarType`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer`
+--
+
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (4,'Johan','780914085902','0173867441','emirates@gmail.com','78091408590225d55ad283aa400af464c76d713c07ad',15,'VB6258',8000),(6,'saiful','801203165741','0112545632','sai.full@gmail.com','',21,'CAS 5214',55000),(8,'imran','110922160147','0172595499','imran@gmail.com','',13,'WWQ 5214',4000),(9,'sufian','850505014217','0134632561','padubeb@yahoo.com','',4,'BAS 526',55000),(33,'sasda','353245234542','0172595499','a@gmail.com','',10,'wwe 1234',150000),(36,'fhfdgh','894321321568','0172595499','b@gmail.com','',23,'juj 5521',5000),(44,'mohd syafid abdullah','780814015771','0126760976','syafid@gmail.com','78081401577125d55ad283aa400af464c76d713c07ad',13,'wb5971n',15000);
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `employee` (
+  `empID` int NOT NULL AUTO_INCREMENT,
+  `empName` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`empID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `logindetail`
+--
+
+DROP TABLE IF EXISTS `logindetail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `logindetail` (
+  `sessionID` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`sessionID`),
+  CONSTRAINT `userID` FOREIGN KEY (`sessionID`) REFERENCES `user` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `logindetail`
+--
+
+LOCK TABLES `logindetail` WRITE;
+/*!40000 ALTER TABLE `logindetail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logindetail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service` (
+  `serviceID` int NOT NULL AUTO_INCREMENT,
+  `serviceName` varchar(100) DEFAULT NULL,
+  `serviceType` varchar(50) DEFAULT NULL,
+  `serviceFees` float DEFAULT NULL,
+  PRIMARY KEY (`serviceID`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `service`
+--
+
+LOCK TABLES `service` WRITE;
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+INSERT INTO `service` VALUES (1,'1,000KM/1 MONTH',NULL,NULL),(2,'10,000KM/6 MONTH',NULL,NULL),(3,'20,000KM/12 MONTH',NULL,NULL),(4,'30,000KM/18 MONTH',NULL,NULL),(5,'40,000KM/24 MONTH',NULL,NULL),(6,'50,000KM/30 MONTH',NULL,NULL),(7,'60,000KM/36 MONTH',NULL,NULL),(8,'70,000KM/42 MONTH',NULL,NULL),(9,'80,000KM/48 MONTH',NULL,NULL),(10,'90,000KM/54 MONTH',NULL,NULL),(11,'100,000KM/60 MONTH',NULL,NULL),(12,'110,000KM/66 MONTH',NULL,NULL),(13,'120,000KM/72 MONTH',NULL,NULL),(14,'130,000KM/78 MONTH',NULL,NULL),(15,'140,000KM/84 MONTH',NULL,NULL),(16,'150,000KM/90 MONTH',NULL,NULL),(17,'160,000KM AND ABOVE',NULL,NULL),(18,'GENERAL REPAIR',NULL,NULL);
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `userID` int NOT NULL AUTO_INCREMENT,
+  `userName` varchar(100) DEFAULT NULL,
+  `userIdentificationNo` varchar(12) DEFAULT NULL,
+  `userContactNo` varchar(10) DEFAULT NULL,
+  `userDateOfBirth` date DEFAULT NULL,
+  `userEmail` varchar(50) DEFAULT NULL,
+  `userPassword` varchar(256) DEFAULT NULL,
+  `userAccessLevel` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (5,'mohd syafid abdullah','780814015771','0126760976','1978-08-14','2021492334@student.uitm.edu.my','78081401577125d55ad283aa400af464c76d713c07ad',NULL);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'csc584'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-11-22 11:00:02
