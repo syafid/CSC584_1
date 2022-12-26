@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `csc584` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `csc584`;
 -- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
 -- Host: localhost    Database: csc584
@@ -26,11 +24,14 @@ DROP TABLE IF EXISTS `appointment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `appointment` (
   `appID` int NOT NULL AUTO_INCREMENT,
-  `appDateTime` timestamp NULL DEFAULT NULL,
+  `appDateTime` datetime DEFAULT NULL,
   `appStatus` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`appID`),
-  CONSTRAINT `empID` FOREIGN KEY (`appID`) REFERENCES `employee` (`empID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `empID` int DEFAULT NULL,
+  `serviceID` int DEFAULT NULL,
+  `carID` int DEFAULT NULL,
+  `cusID` int DEFAULT NULL,
+  PRIMARY KEY (`appID`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +40,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (3,'2022-11-30 15:08:10','Approve',7,1,13,6),(5,'2022-11-30 08:00:58','Approve',7,1,13,36),(7,'2022-12-01 15:14:04','Approve',7,1,13,4),(10,'2022-11-25 15:21:02','Reject',7,1,13,9),(13,'2022-12-01 15:37:51','Approve',6,1,13,8),(16,'2022-12-10 08:30:52','Approve',7,6,13,33),(66,'2022-12-24 20:33:26','Approve',7,1,13,44),(70,'2022-12-26 20:42:00','Approve',6,1,13,44),(71,'2022-12-26 20:42:00','Approve',6,1,13,44),(72,'2022-12-26 20:42:00','Approve',7,1,13,44),(73,'2022-12-26 20:42:00','NEW',0,1,13,44),(74,'2022-12-26 20:42:00','NEW',0,1,13,44),(76,'2022-12-26 20:42:00','NEW',0,1,13,44),(77,'2022-12-26 20:42:00','Approve',6,1,13,44),(78,'2022-12-26 20:42:00','Approve',6,1,13,44),(79,'2022-12-26 20:42:00','Approve',7,1,13,44);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,6 +127,33 @@ LOCK TABLES `employee` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `invoice`
+--
+
+DROP TABLE IF EXISTS `invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `invoice` (
+  `invoiceID` int NOT NULL AUTO_INCREMENT,
+  `custID` int DEFAULT NULL,
+  `partID` int DEFAULT NULL,
+  `partQuant` int DEFAULT NULL,
+  `partPrice` decimal(5,2) DEFAULT NULL,
+  `InvoiceDateTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`invoiceID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invoice`
+--
+
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `logindetail`
 --
 
@@ -145,6 +174,33 @@ CREATE TABLE `logindetail` (
 LOCK TABLES `logindetail` WRITE;
 /*!40000 ALTER TABLE `logindetail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `logindetail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `part`
+--
+
+DROP TABLE IF EXISTS `part`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `part` (
+  `partID` int NOT NULL AUTO_INCREMENT,
+  `partDesc` varchar(45) DEFAULT NULL,
+  `partQuant` int DEFAULT NULL,
+  `partPrice` decimal(10,2) DEFAULT NULL,
+  `partRateTime` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`partID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `part`
+--
+
+LOCK TABLES `part` WRITE;
+/*!40000 ALTER TABLE `part` DISABLE KEYS */;
+INSERT INTO `part` VALUES (1,'Engine Oil 4 litres',1,150.00,0.40),(2,'Engine Oil Filter',1,38.23,0.40),(3,'Drain Plug Gasket',1,2.37,0.40),(4,'Drain Plug',1,1.38,0.40),(5,'Spark Plug',4,28.04,0.30),(6,'Engine Air Filter',1,55.18,0.50),(7,'Dust and Pollen Filter',1,64.17,0.30),(8,'Engine Coolant',5,23.94,1.00),(9,'Brake Fluid DOT 4',1,32.47,0.50),(10,'Fuel Filter',1,17.93,0.40),(11,'AT Transmission Oil / ATF',8,62.62,0.70),(12,'4WD Gear Oil',1,47.00,1.30);
+/*!40000 ALTER TABLE `part` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -188,9 +244,9 @@ CREATE TABLE `user` (
   `userDateOfBirth` date DEFAULT NULL,
   `userEmail` varchar(50) DEFAULT NULL,
   `userPassword` varchar(256) DEFAULT NULL,
-  `userAccessLevel` varchar(5) DEFAULT NULL,
+  `userAccessLevel` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +255,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'mohd syafid abdullah','780814015771','0126760976','1978-08-14','2021492334@student.uitm.edu.my','78081401577125d55ad283aa400af464c76d713c07ad',NULL);
+INSERT INTO `user` VALUES (0,'mohd syafid abdullah','780814015771','0126760976','1978-08-14','2021492334@student.uitm.edu.my','78081401577125d55ad283aa400af464c76d713c07ad','supervisor'),(6,'AKMAL FAIZ BIN ADIDAN','202027981411','0172541214','1980-12-01','2020279814@student.uitm.edu.my','20202798141125d55ad283aa400af464c76d713c07ad','technician'),(7,'MAZLAN BIN MOHAMAD','820506142353','0135622321','1982-05-06','2021435106@student.uitm.edu.my','82050614235325d55ad283aa400af464c76d713c07ad','technician');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-22 11:00:02
+-- Dump completed on 2022-12-26  9:58:01
