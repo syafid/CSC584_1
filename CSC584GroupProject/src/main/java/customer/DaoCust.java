@@ -148,7 +148,7 @@ public class DaoCust {
 					
 				}
 				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
-				 String sql = "SELECT cusID, cusName, cusEmail FROM customer where cusID = '"+cusID+"'";
+				 String sql = "SELECT cusID, cusName, cusMyKad, cusPhoneNo, cusEmail, cusCarType, cusCarPlate, cusCurrMileage FROM customer where cusID = '"+cusID+"'";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
 		         Customer cust = new Customer();
@@ -157,6 +157,13 @@ public class DaoCust {
 		        	
 		        	 cust.setCusName(result.getString("cusName"));
 		        	 cust.setCusID(Integer.parseInt(result.getString("cusID")));
+		        	 cust.setCusMyKad(result.getString("cusMyKad"));
+		        	 cust.setCusPhoneNo(result.getString("cusPhoneNo"));
+		        	 cust.setCusEmail(result.getString("cusEmail"));
+		        	 cust.setCusCarType(result.getInt("cusCarType"));
+		        	 cust.setCusCarNo(result.getString("cusCarPlate"));
+		        	 cust.setCusCurrMileage(result.getInt("cusCurrMileage"));
+		        	 
 		             CustList.add(cust);
 		             System.out.println(sql);
 		             //System.out.println(result.getString(2));

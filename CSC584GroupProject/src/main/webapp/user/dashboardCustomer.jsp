@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="customer.*" %>
 <%@page import="appointment.*" %>
@@ -9,14 +11,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Customer Dashboard | By Code Info</title>
+  <title>Customer Dashboard | By Group 5</title>
   <link rel="stylesheet" href="style2.css" />
   <!-- Font Awesome Cdn Link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
  <link rel="stylesheet" href="style2.css" />
-
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <script>
+       
+          function functionToExecute(t){
+        	  //console.log(t.value);
+        	  alert("Appointment ID " +t.value+ " been deleted from the record.");
+          }
+        
+    </script>
 </head>
 <body>
+
+<% %>
 <%DaoCustomerLogin loginDetail = new DaoCustomerLogin(); %>
 
 
@@ -40,7 +52,7 @@
        
         <li><a href="#">
           <i class="fas fa-comment"></i>
-          <span class="nav-item">Message</span>
+          <span class="nav-item">Message <%=logins %></span>
         </a></li>
         <li><a href="#">
           <i class="fas fa-database"></i>
@@ -75,11 +87,24 @@
       
 
          <h1>Hi, Welcome <%=datalogin.get(recordCount).getCusName()%></h1>
-        <i class="fas fa-user-cog"></i>
+        <i class="fas fa-user-cog">Today's date: <%= (new java.util.Date()).toLocaleString()%></i>
+        
       </div>
 <section class="attendance">
-        <div class="attendance-list">
-        <%if (request.getAttribute("message") == "success") { %>
+<div class="attendance-list">
+<%if (request.getAttribute("messageDeleteSuccess") == "success") { %>
+<div class="alert alert-success" role="alert"><h3>
+ Record Deleted. Thank You.
+</h3></div>
+<%}%>
+
+<%if (request.getAttribute("messageDeleteError") == "error") { %>
+<div class="alert alert-success" role="alert"><h3>
+ Error on deleting the record. Please Try Again. Thank You.
+</h3></div>
+<%}%>
+
+<%if (request.getAttribute("message") == "success") { %>
 <div class="alert alert-success" role="alert"><h3>
  New Appointment Added. Thank You.
 </h3></div>
@@ -91,26 +116,34 @@
 </div><br>
 <%}%>
           <h1>Appointment List</h1>
+      <form action="AppointmentCancel" method="post">
           <table class="table">
             <thead>
             
               <tr>
                 <th>No</th>
+                <th>Appointment ID</th>
                 <th>Date/Time</th>
                 <th>Status</th>
                 <th>Car Type</th>
-                <th>Approved By</th>
+<!--                 <th>Technician Name</th> -->
                 <th>Service Type</th>
+                
                 <th>Action</th>
               </tr>
             </thead>
-            <%DaoAppointment appointment = new DaoAppointment(); %>
-            <%int cusID = datalogin.get(recordCount).getCusID(); %>
-			<%ArrayList<Appointment> ListApp = appointment.AppointList(cusID); %>
-			<% for (int a = 0; a < ListApp.size(); a ++ )  { %>
+          <%DaoAppointment appointment = new DaoAppointment(); %>
+            	<%int cusID = datalogin.get(recordCount).getCusID(); %>
+				<%ArrayList<Appointment> ListApp = appointment.AppointList(cusID); %>
+				 
             <tbody>
+            <% for (int a = 0; a < ListApp.size(); a ++ )  { %>
               <tr>
-                <td><%=a+1 %></td>
+				 <td><%=a+1 %></td>
+					<%int AppID = ListApp.get(a).getAppID(); %>
+					<%int serve = ListApp.get(a).getServiceID(); %>
+				<td><%=AppID %><!-- <input type="hidden" id="appid" name="AppID" value="<%=AppID %>" ></input>--><input type="hidden" name="email" value="<%=logins%>" ></td>
+				
 				<td><%=ListApp.get(a).getAppDate() %></td>
                 <td><%=ListApp.get(a).getAppStatus() %></td>
                 <%DaoCar car = new DaoCar(); %>
@@ -118,27 +151,26 @@
 	                <% for (int b = 0; b < CarList.size(); b ++ )  { %>
 	                	<td><%=CarList.get(b).getCarModel() %></td>
 	                <%} %>
-	            <%int userid = ListApp.get(a).getEmpID(); %>
-                <%DaoUser user = new DaoUser(); %>
-                <%ArrayList<User> UserList = user.getUser(userid); %>
-	                 <% for (int c = 0; c < UserList.size(); c ++ )  { %>
-		                	<td><%=UserList.get(c).getUserName()%></td>
-		                <%} %>
+	            
                 <%DaoService serviceList = new DaoService(); %>
-                <%int serve = ListApp.get(a).getServiceID(); %>
+              
                 <%ArrayList<Service> sList = serviceList.ServiceDetail(serve); %>
                 	<% for (int d = 0; d < sList.size(); d ++ )  { %>
 	                	<td><%=sList.get(d).getServiceName()%></td>
 	                <%} %>
-               
-                	
-                <td><button>View</button></td>
+                 
+                
+                  
+                 
+                  <td><button type="submit" name="AppID" onClick="functionToExecute(this)" value="<%=AppID %>">Cancel</button></td>
+                 
               </tr>
-            
-            
+             <%} %>
+              
             </tbody>
-            <%} %>
+           
           </table>
+          </form>
         </div>
       </section>
     </section>

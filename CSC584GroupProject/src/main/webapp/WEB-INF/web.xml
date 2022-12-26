@@ -89,4 +89,14 @@
     <servlet-name>AppointmentAdd</servlet-name>
     <url-pattern>/AppointmentAdd</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AppointmentCancel</display-name>
+    <servlet-name>AppointmentCancel</servlet-name>
+    <servlet-class>appointment.AppointmentCancel</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AppointmentCancel</servlet-name>
+    <url-pattern>/AppointmentCancel</url-pattern>
+  </servlet-mapping>
 </web-app>

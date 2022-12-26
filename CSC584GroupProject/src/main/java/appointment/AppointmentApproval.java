@@ -6,7 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import car.DaoCar;
 
@@ -15,6 +19,9 @@ import car.DaoCar;
  */
 public class AppointmentApproval extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String paramName;
+	private String paramValue;
+	public String message;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -23,36 +30,66 @@ public class AppointmentApproval extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("text/html");
-		String AppID = request.getParameter("AppID");
-		String AssignTo = request.getParameter("AssignTo");
-		//update appointment table with new technician ID and status
 		
-//		if(ButID1 == "apprv") {
-//			request.setAttribute("AppID", AppID);
-//			RequestDispatcher dis=getServletContext().getRequestDispatcher("/appointment/AppointmentApproveReject.jsp");
-//			 dis.forward(request, response);
-//		}else { //reject appointment
-//			AppID = "00";
-//			request.setAttribute("AppID", AppID);
-//			RequestDispatcher dis=getServletContext().getRequestDispatcher("/appointment/AppointmentApproveReject.jsp");
-//			 dis.forward(request, response);
-//		}
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		String AppID = request.getParameter("AppID");
+		String AssignTo = request.getParameter("AssignTo");//technician
+		String statusButton = request.getParameter("status");
+		String email = "2021492334@student.uitm.edu.my";//request.getParameter("email");
+		System.out.println(AppID);
+		System.out.println(AssignTo);
+		System.out.println(statusButton);
+		
+		//update appointment table with new technician ID and status
+		DaoAppointment updateApp = new DaoAppointment();
+		ArrayList<Appointment> applist = new ArrayList<Appointment>();
+		Appointment appt = new Appointment();
+		
+		appt.setAppID(Integer.parseInt(AppID));
+		appt.setEmpID(Integer.parseInt(AssignTo));
+		
+		if(statusButton.contentEquals("1"))
+		{
+			appt.setAppStatus("Approve");
+		}
+		
+		else {
+			appt.setAppStatus("Reject");
+		}
+		applist.add(appt);
+		
+		try {
+			message = updateApp.UpdAppoint(applist);
+			if(message == "success") {  //String message
+				session.setAttribute("message", message);
+				session.setAttribute("email",email);
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboard.jsp");
+				 dis.forward(request, response);
+			}else if(message == "error") { //reject appointment
+				session.setAttribute("message", message);
+				session.setAttribute("email",email);
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboard.jsp");
+				 dis.forward(request, response);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

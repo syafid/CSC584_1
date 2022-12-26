@@ -35,6 +35,17 @@
 		    
 		});
    })
+   
+   function TDate() {
+    var UserDate = document.getElementById("userdate").value;
+    var ToDate = new Date();
+
+    if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+          alert("The Date must be Bigger or Equal to today date");
+          return false;
+     }
+    return true;
+}
   </script>
 
 <%DaoCustomerLogin loginDetail = new DaoCustomerLogin(); %>
@@ -43,7 +54,7 @@
 <%ArrayList<Customer> datalogin = loginDetail.getSessionSet(logins); %> 
 <% for (int recordCount1 = 0; recordCount1 < datalogin.size(); recordCount1 ++ )  { %>
 <% Customer customer = (Customer)datalogin.get(recordCount1); %>
-
+<%String referer = request.getHeader("Referer"); %>
 <title>New Appointment Registration</title>
 </head>
 <body>
@@ -72,7 +83,7 @@
           <span class="nav-item">New Appointment</span>
         </a></li>
        
-        <li><a href="#">
+        <li><a href="<%=referer %>">
           <i class="fas fa-comment"></i>
           <span class="nav-item">Message</span>
         </a></li>
@@ -143,7 +154,7 @@
 					</td>
 					<td>
 
-					    <input type="date" name="date" required>
+					    <input type="date" name="date" id="userdate" onchange="TDate()"required> 
 						
 					</td>
 					</tr>
@@ -222,7 +233,7 @@
      				
      				<tr>
      				<td colspan="2">
- 						<button type="submit" class="btn btn-primary">Save</button> <button type="cancel" class="btn btn-alert">Cancel</button> 
+ 						<button type="submit" value="submit" class="btn btn-primary">Save</button> <button type="cancel" value="cancel" class="btn btn-alert">Cancel</button> 
  					</td>
  					</tr>   
  				</form> 

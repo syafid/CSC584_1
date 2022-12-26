@@ -45,7 +45,7 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link"
-				href="#login">Log In</a>
+				href="CustomerLoginServlet">Log In</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link"
@@ -66,7 +66,7 @@
 			
 			<li class="nav-item">
 				<a class="nav-link"
-				href="#staff">Staff Dashboard</a>
+				href="LoginServlet">Staff Log In</a>
 			</li>
 			</ul>
 		</div>

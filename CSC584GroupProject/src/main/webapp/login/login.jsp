@@ -18,7 +18,7 @@
       <div class="form">
         <div class="login">
           <div class="login-header">
-            <h3>LOGIN</h3>
+            <h3>STAFF LOGIN</h3>
             <p>Please enter your credentials to login.</p>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <input type="text" name="email" placeholder="email"/>
           <input type="password" name="password" placeholder="password"/>
           <button type="submit" class="btn btn-primary">Log Me In</button>    
-          <p class="message">Not registered? <a href="">Create an account</a></p>
+          <p class="message">New staff? <a href="UserServlet">Create an account</a></p>
         </form>
       </div>
     </div>

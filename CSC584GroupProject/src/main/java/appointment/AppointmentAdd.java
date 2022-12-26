@@ -67,7 +67,8 @@ public class AppointmentAdd extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		//doGet(request, response);
+		
 		//retrieve value from NewAppointment.jsp and store in table appointment
 		DaoAppointment newdata = new DaoAppointment();
 		ArrayList<Appointment> newappoint = new ArrayList<Appointment>();
@@ -86,6 +87,8 @@ public class AppointmentAdd extends HttpServlet {
 		String carID = request.getParameter("carID");
 		String temp = request.getParameter("date");//temp[0] getParameterValues
 		String time = request.getParameter("time");
+//		carPlate
+//		carMileage
 		System.out.println("Date > " +temp);
 		System.out.println("Time > " +time);
 		Date date = null;
@@ -115,7 +118,8 @@ public class AppointmentAdd extends HttpServlet {
 		
 		newappoint.add(appoint);
 		
-		
+		String requestURI = request.getRequestURI();
+		System.out.println(requestURI);
 		
 		try {
 			String status = newdata.AddAppoint(newappoint);
@@ -123,12 +127,15 @@ public class AppointmentAdd extends HttpServlet {
 				String alert = "success";
 				response.setContentType("text/html");
 //				HttpSession session = request.getSession();
-//	            session.setAttribute("email", cusEmail);
-//				request.setAttribute("message",alert);
-				request.getSession().setAttribute("email",cusEmail);
-				request.getSession().setAttribute("message",alert);
+	            request.setAttribute("email", cusEmail);
+				request.setAttribute("message",alert);
+				HttpSession session = request.getSession();
+				session.setAttribute("email",cusEmail);
+				session.setAttribute("message",alert);
 				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
-				 dis.forward(request, response);
+				dis.forward( request, response);
+				 //dis.forward(request, response);
+				//return; 
 				 
 			}
 			else {
@@ -138,10 +145,14 @@ public class AppointmentAdd extends HttpServlet {
 //					HttpSession session = request.getSession();
 //		            session.setAttribute("email", cusEmail);
 //					request.setAttribute("message",alert);
-					request.getSession().setAttribute("email",cusEmail);
-					request.getSession().setAttribute("message",alert);
+					request.setAttribute("email",cusEmail);
+					request.setAttribute("message",alert);
+					HttpSession session = request.getSession();
+					session.setAttribute("email",cusEmail);
+					session.setAttribute("message",alert);
 					RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
 					 dis.forward(request, response);
+					 return;
 					 
 				
 			}

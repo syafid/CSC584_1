@@ -13,6 +13,7 @@ public class User {
 	public String userEmail;
 	public String userPassword;
 	public String userAccessLevel;
+	
 	public int getUserID() {
 		return userID;
 	}

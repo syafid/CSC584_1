@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import = "java.io.*,java.util.*"%>
 <%@page import="java.util.ArrayList" %>
+<%@page import="java.time.LocalDate"%>
 <%@page import="login.DaoLogin" %>
 <%@page import="login.Login" %>
 <%@page import="customer.*" %>
@@ -16,13 +18,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" href="style2.css" />
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
- 
+  <script type="text/javascript">
+  function functionToExecute(){
+	  var test = document.getElementById("assign2").value;
+	  console.log(test);
+	  //alert("Appointment ID " +t.value+ " been deleted from the record.");
+  }
+    </script>
 </head>
 <body>
 
 <%DaoLogin loginDetail = new DaoLogin(); %>
- <%String logins = (String) request.getAttribute("email"); %>
-  <%ArrayList<Login> datalogin = loginDetail.getResultSet(logins); %>
+<%String logins = (String) request.getAttribute("email"); %>
+<%ArrayList<Login> datalogin = loginDetail.getResultSet(logins); %>
   <% for (int z = 0; z < datalogin.size(); z ++ )  { %>
   <div class="container">
     <nav>
@@ -68,6 +76,18 @@
 
       <section class="attendance">
         <div class="attendance-list">
+<%if (request.getAttribute("message") == "success") { %>
+<div class="alert alert-success" role="alert"><h3>
+ Appointment updated. Thank You.
+</h3></div>
+<%}%>
+
+<%if (request.getAttribute("message") == "error") { %>
+<div class="alert alert-danger" role="alert">
+ Error When Updated the Appointment. Please Try Again Later
+</div><br>
+<%}%>
+
         <%if(datalogin.get(0).getUserAccessLevel().equals("supervisor") ) { %>    
           <h1>Appointment List</h1>
           
@@ -77,10 +97,12 @@
 
                 <th align="center">ID</th>
                 <th align="center">Customer Name</th>
+               
                 <th align="center">Status</th>
                 <th align="center">Date/Time</th>
                 <th align="center">Service Type</th>
                 <th align="center">Car Detail</th>
+                
                 <th align="center">Assign To</th>
                 <th align="center">Action</th>
                 <th align="center"></th>
@@ -94,24 +116,30 @@
 	           
 				<%ArrayList<Appointment> ApptAll = appointment.getAppointment(); %>
 				<% for (int a = 0; a < ApptAll.size(); a ++ )  { %>
-			 <form action="AppointmentApproval" method="get">	     
+			 <form action="AppointmentApproval" method="post">	     
               <tr>
-
+				<%int appid = ApptAll.get(a).getAppID(); %>
                 <td><%=ApptAll.get(a).getAppID() %></td>
+                <input type="hidden" name="AppID" value="<%=ApptAll.get(a).getAppID() %>">
+               <!--  <input type="hidden" name="email" value="<%=logins %>">  -->
                 
                 <%DaoCust customer = new DaoCust(); %>
                 <%ArrayList<Customer> CustomerList = customer.getCustomer(ApptAll.get(a).getCusID()); %>
 	                 <% for (int c = 0; c < CustomerList.size(); c ++ )  { %>
                			 <td style="width:15%"><%=CustomerList.get(c).getCusName() %></td> 
+               		
                		<%} %>
-                <td style="width:5%"><%=ApptAll.get(a).getAppStatus() %></td>
+               		
+               			<td style="width:5%"><%=ApptAll.get(a).getAppStatus() %></td>
+               	
+                
                 <td style="width:15%"><%=ApptAll.get(a).getAppDate() %></td>
                 
                 <%DaoService serviceList = new DaoService(); %>
                 <%int serve = ApptAll.get(a).getServiceID(); %>
                 <%ArrayList<Service> sList = serviceList.ServiceDetail(ApptAll.get(a).getServiceID()); %>
                 	<% for (int d = 0; d < sList.size(); d ++ )  { %>
-               			 <td style="width:15%"><%=sList.get(0).getServiceName() %></td>
+               			 <td style="width:15%"><%=sList.get(d).getServiceName() %></td>
                		<%} %>
                		
                	<%DaoCar car = new DaoCar(); %>
@@ -120,17 +148,24 @@
                 		<td style="width:25%"><%=CarList.get(b).getCarModel() %> / <%=CarList.get(b).getCarVariant() %> / <%=CarList.get(b).getCarTransmission() %> </td> <!-- //call car detail-->
                 	<%} %>
                 	
+                <%DaoCust customer2 = new DaoCust(); %>
+                <%ArrayList<Customer> CustomerList2 = customer2.getCustomer(ApptAll.get(a).getCusID()); %>
+	                 <% for (int w = 0; w < CustomerList2.size(); w ++ )  { %>
+               			
+               		<%} %>
+                	
                 <%if(ApptAll.get(a).getEmpID() == 0){ %>
                 <td>
                 	
                 
-	                <select name="technician"> <option disabled selected value> -- select to assign -- </option>
+	                <select name="AssignTo" required> <option disabled selected value> -- select to assign -- </option>
 	                <%DaoUser UserTech = new DaoUser(); %>
 	                <%ArrayList<User> userArr = UserTech.getUserSet(); %>
 	                <%!String technician = null; %>
-	                <%for (int e=0; e<userArr.size(); e++) { %>
+	                <%for (int e=0; e < userArr.size(); e++) { %>
 	               
-	                <option value="<%=userArr.get(e).getUserID() %>"><%=userArr.get(e).getUserID() %><%=userArr.get(e).getUserName() %> </option>
+	                <option  value="<%=userArr.get(e).getUserID() %>"  required><%=userArr.get(e).getUserName() %> </option>
+	                
 	                <%} %>
 	                </select>
 	            
@@ -144,21 +179,22 @@
                 	 		}
                 	 		%>
                 	 		
-                	 		<select name="technician"> <option disabled selected value> <%= technician %> </option>
+                	 		<select name="AssignTo"> <option disabled selected value> <%= technician %> </option>
 			                <%DaoUser UserTech = new DaoUser(); %>
 			                <%ArrayList<User> userArr = UserTech.getUserSet(); %>
 			                
 			                <%for (int e=0; e<userArr.size(); e++) { %>
 			               
-			                <option value="<%=userArr.get(e).getUserID() %>"><%=userArr.get(e).getUserID() %><%=userArr.get(e).getUserName() %> </option>
+			                <option value="<%=userArr.get(e).getUserID() %>"><%=userArr.get(e).getUserName() %> </option>
 			                <%} %>
 	                </select>
                 	 
                 	 </td>
                  <%} %>
                 
-                <td style="width:25%" align="center"><input type="radio" name="status" value="1">Accept <input type="radio" name="status" value="1">Reject</td>
-                <td align="right"><a href="AppointmentApproval?AppID=<%=ApptAll.get(a).getAppID()%>&AssignTo?="><button id="apprv">Update</button></a> </td>
+                <td style="width:25%" align="center"><input type="radio" name="status" value="1" required>Accept <input type="radio" name="status" value="9" required>Reject</td>
+                <td align="center"><button type="submit">Update</button></td>
+                
               </tr>
               </form>
              <%} %>
@@ -173,21 +209,50 @@
             <thead>
               <tr>
 
-                <th>Appointment ID</th>                              
-                <th>Appointment Date/Time</th>
+                <th>ID</th>                              
+                <th>Date/Time</th>
                 <th>Service Type</th>
                 <th>Car Detail</th>
-                <th>Assigned By</th>
+                <th>Customer Name</th>
+                <th>Car Plate No</th>
+                <th>Car Mileage</th>
                 <th>Action</th>
               </tr>
             </thead>
                     
       		
             <tbody>
+             <%DaoAppointment appointment = new DaoAppointment(); %>
+	           
+				<%ArrayList<Appointment> ApptAll = appointment.AppointListByTech(datalogin.get(0).getUserID()); %>
+				<% for (int a = 0; a < ApptAll.size(); a ++ )  { %>
             <tr>
+            <td><%=ApptAll.get(a).getAppID() %></td>
+            <td style="width:20%"><%=ApptAll.get(a).getAppDate() %></td>
             
+             	<%DaoService serviceList = new DaoService(); %>
+                <%int serve = ApptAll.get(a).getServiceID(); %>
+                <%ArrayList<Service> sList = serviceList.ServiceDetail(ApptAll.get(a).getServiceID()); %>
+                	<% for (int d = 0; d < sList.size(); d ++ )  { %>
+               			 <td style="width:15%"><%=sList.get(d).getServiceName() %></td>
+               		<%} %>
             
+            	<%DaoCar car = new DaoCar(); %>
+                <%ArrayList<Car> CarList = car.getCarType(ApptAll.get(a).getCarID()); %>
+	            <% for (int b = 0; b < CarList.size(); b ++ )  { %>	
+                		<td style="width:25%"><%=CarList.get(b).getCarModel() %> / <%=CarList.get(b).getCarVariant() %> / <%=CarList.get(b).getCarTransmission() %> </td> <!-- //call car detail-->
+                	<%} %>
+                	
+                 <%DaoCust customer = new DaoCust(); %>
+                 <%ArrayList<Customer> CustomerList = customer.getCustomer(ApptAll.get(a).getCusID()); %>
+	                 <% for (int c = 0; c < CustomerList.size(); c ++ )  { %>
+               			 <td style="width:25%"><%=CustomerList.get(c).getCusName() %></td> 
+               			<td style="width:15%"><%=CustomerList.get(c).getCusCarPlate() %></td>
+               			<td style="width:25%"><%=CustomerList.get(c).getCusCurrMileage() %> KM</td>
+               		<%} %>
+               <td style="width:20%"><a href=""><button type="submit">Attend</button></a> </td>
             </tr>
+            <%} %>
             </tbody>
             </table>
            <%} %>
@@ -198,14 +263,7 @@
 
 
 <%} %>
- <script>
-      $(document).ready(function() {
-          $("#technician").change(function() {
-              let selectedItem = $(this).children("option:selected").val();
-              alert("You have selected the name - " + selectedItem);
-            });
-        });
-    </script>
+
 
 </body>
 </html>

@@ -79,21 +79,27 @@ public class DaoUser {
 			 String sql = "SELECT userID, userName, userAccessLevel FROM user where userAccessLevel = 'technician';";
 	         Statement statement = conn.createStatement();
 	         ResultSet result = statement.executeQuery(sql);
-	         User userA = new User();
+	         
 	         
 	         while (result.next()) {
-	        	
-	        	 
+	        	 User userA = new User();	 
 		         userA.setUserID(result.getInt("userID"));
 		         userA.setUserName(result.getString("userName"));
 		         userA.setUserAccessLevel(result.getString("userAccessLevel"));
 	             userArr.add(userA);
 	            
 	             }
+	         for(int a=0;a<userArr.size();a++) {
+	        	// System.out.println(userArr.get(a).toString());
+	        	
+	        	 
+	         }
 		}
 		catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+		
+		
 		return userArr;
 }
 //	
