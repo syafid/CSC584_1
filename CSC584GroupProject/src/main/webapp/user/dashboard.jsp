@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ page import = "java.io.*,java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.time.LocalDate"%>
 <%@page import="login.DaoLogin" %>
@@ -18,18 +16,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" href="style2.css" />
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-  <script type="text/javascript">
-  function functionToExecute(){
-	  var test = document.getElementById("assign2").value;
-	  console.log(test);
-	  //alert("Appointment ID " +t.value+ " been deleted from the record.");
+  <script>
+  function checkButton(){
+  if(document.getElementById('status').checked) {   
+      var selectedValue = document.getElementById('status').value;  
+      alert("Selected Radio Button is: " + selectedValue);    
+		}  
   }
-    </script>
+  
+  function myClick(){
+	  var btn = document.getElementById("mybtn");
+	  btn.value = 'Attend'; // will just add a hidden value
+	  btn.innerHTML = 'Job Started at '+ new Date().toLocaleString();
+  }
+  </script>
 </head>
 <body>
 
 <%DaoLogin loginDetail = new DaoLogin(); %>
-<%String logins = (String) request.getAttribute("email"); %>
+<%String logins = (String) session.getAttribute("email"); %>
 <%ArrayList<Login> datalogin = loginDetail.getResultSet(logins); %>
   <% for (int z = 0; z < datalogin.size(); z ++ )  { %>
   <div class="container">
@@ -103,7 +108,7 @@
                 <th align="center">Service Type</th>
                 <th align="center">Car Detail</th>
                 
-                <th align="center">Assign To</th>
+                <th align="center">Technician</th>
                 <th align="center">Action</th>
                 <th align="center"></th>
                 
@@ -116,12 +121,13 @@
 	           
 				<%ArrayList<Appointment> ApptAll = appointment.getAppointment(); %>
 				<% for (int a = 0; a < ApptAll.size(); a ++ )  { %>
-			 <form action="AppointmentApproval" method="post">	     
+			 <form action="AppointmentApproval" method="POST" target="_self">	     
               <tr>
 				<%int appid = ApptAll.get(a).getAppID(); %>
                 <td><%=ApptAll.get(a).getAppID() %></td>
                 <input type="hidden" name="AppID" value="<%=ApptAll.get(a).getAppID() %>">
-               <!--  <input type="hidden" name="email" value="<%=logins %>">  -->
+                <input type="hidden" name="cusID" value="<%=ApptAll.get(a).getCusID() %>">
+                 <input type="hidden" name="email" value="<%=datalogin.get(0).getUserEmail() %>">
                 
                 <%DaoCust customer = new DaoCust(); %>
                 <%ArrayList<Customer> CustomerList = customer.getCustomer(ApptAll.get(a).getCusID()); %>
@@ -155,45 +161,48 @@
                		<%} %>
                 	
                 <%if(ApptAll.get(a).getEmpID() == 0){ %>
-                <td>
-                	
-                
-	                <select name="AssignTo" required> <option disabled selected value> -- select to assign -- </option>
-	                <%DaoUser UserTech = new DaoUser(); %>
-	                <%ArrayList<User> userArr = UserTech.getUserSet(); %>
-	                <%!String technician = null; %>
-	                <%for (int e=0; e < userArr.size(); e++) { %>
-	               
-	                <option  value="<%=userArr.get(e).getUserID() %>"  required><%=userArr.get(e).getUserName() %> </option>
+                <td style="width:15%">
+                	To be assign
+                   
+	               <!--  <select name="AssignTo"> <option disabled selected value> -- select to assign -- </option>  -->
+	                <!--<%DaoUser UserTech = new DaoUser(); %>  -->
+	                <!--<%ArrayList<User> userArr = UserTech.getUserSet(); %>  -->
+	                <!--<%!String technician = null; %>  -->
+	                <!--<%for (int e=0; e < userArr.size(); e++) { %>  -->
+	               		
+	              <!--   <option  value="<%=userArr.get(e).getUserID() %>"  required><%=userArr.get(e).getUserName() %> </option>  -->
 	                
-	                <%} %>
-	                </select>
+	               <!-- <%} %>  -->
+	               <!--  </select>  -->
+	               
 	            
                 </td>
                  <%} else { %>   
-                	 <td>	<%DaoUser UserTech1 = new DaoUser(); %>
-                	 		<%ArrayList<User> userArr1 = UserTech1.getUser(ApptAll.get(a).getEmpID()); %>
-                	 		<%for (int e=0; e<userArr1.size(); e++) { 
-                	 			 technician = userArr1.get(e).getUserName();
-                	 			
-                	 		}
-                	 		%>
+                	 <td style="width:15%">	
+                	     <%DaoUser UserTech1 = new DaoUser(); %>  
+                	 	 <%ArrayList<User> userArr1 = UserTech1.getUser(ApptAll.get(a).getEmpID()); %> 
+                	 	 <%for (int e=0; e<userArr1.size(); e++) {  
+                	 			 technician = userArr1.get(e).getUserName(); %> 
+                	 	<input type="text" name="assignTo" value="<%=technician %>" >
+                	 		<%	} 
+                	 		 %> 
                 	 		
-                	 		<select name="AssignTo"> <option disabled selected value> <%= technician %> </option>
-			                <%DaoUser UserTech = new DaoUser(); %>
-			                <%ArrayList<User> userArr = UserTech.getUserSet(); %>
+                	 		 <!--  <select name="AssignTo"> <option disabled selected value> <%= technician %> </option>-->
+			                 <!-- <%DaoUser UserTech = new DaoUser(); %>-->
+			                 <!-- <%ArrayList<User> userArr = UserTech.getUserSet(); %>-->
 			                
-			                <%for (int e=0; e<userArr.size(); e++) { %>
+			                 <!-- <%for (int e=0; e<userArr.size(); e++) { %>-->
+			              
+			                 <!-- <option value="<%=userArr.get(e).getUserID() %>"><%=userArr.get(e).getUserName() %> </option> -->
+			               <!--   <%} %> -->
 			               
-			                <option value="<%=userArr.get(e).getUserID() %>"><%=userArr.get(e).getUserName() %> </option>
-			                <%} %>
-	                </select>
+	               <!--  </select> -->
                 	 
                 	 </td>
                  <%} %>
                 
-                <td style="width:25%" align="center"><input type="radio" name="status" value="1" required>Accept <input type="radio" name="status" value="9" required>Reject</td>
-                <td align="center"><button type="submit">Update</button></td>
+                <td style="width:25%" align="center">
+              <button type="submit" name="submitApproval">Update</button></td>
                 
               </tr>
               </form>
@@ -250,7 +259,7 @@
                			<td style="width:15%"><%=CustomerList.get(c).getCusCarPlate() %></td>
                			<td style="width:25%"><%=CustomerList.get(c).getCusCurrMileage() %> KM</td>
                		<%} %>
-               <td style="width:20%"><a href=""><button type="submit">Attend</button></a> </td>
+               <td style="width:20%"><button id="mybtn" onclick="myClick()" value="Attend">Attend</button></td>
             </tr>
             <%} %>
             </tbody>
