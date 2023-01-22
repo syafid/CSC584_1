@@ -31,7 +31,7 @@ CREATE TABLE `appointment` (
   `carID` int DEFAULT NULL,
   `cusID` int DEFAULT NULL,
   PRIMARY KEY (`appID`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (3,'2022-11-30 15:08:10','Approve',7,1,13,6),(5,'2022-11-30 08:00:58','Approve',7,1,13,36),(7,'2022-12-01 15:14:04','Approve',7,1,13,4),(10,'2022-11-25 15:21:02','Reject',7,1,13,9),(13,'2022-12-01 15:37:51','Approve',6,1,13,8),(16,'2022-12-10 08:30:52','Approve',7,6,13,33),(66,'2022-12-24 20:33:26','Approve',7,1,13,44),(70,'2022-12-26 20:42:00','Approve',6,1,13,44),(71,'2022-12-26 20:42:00','Approve',6,1,13,44),(72,'2022-12-26 20:42:00','Approve',7,1,13,44),(73,'2022-12-26 20:42:00','NEW',0,1,13,44),(74,'2022-12-26 20:42:00','NEW',0,1,13,44),(76,'2022-12-26 20:42:00','NEW',0,1,13,44),(77,'2022-12-26 20:42:00','Approve',6,1,13,44),(78,'2022-12-26 20:42:00','Approve',6,1,13,44),(79,'2022-12-26 20:42:00','Approve',7,1,13,44);
+INSERT INTO `appointment` VALUES (3,'2022-11-30 15:08:10','Approve',6,1,13,6),(5,'2022-11-30 08:00:58','Approve',7,1,13,36),(7,'2022-12-01 15:14:04','Approve',7,1,13,4),(10,'2022-11-25 15:21:02','Reject',7,1,13,9),(13,'2022-12-01 15:37:51','Reject',0,1,13,8),(16,'2022-12-10 08:30:52','Approve',6,6,13,33),(70,'2022-12-26 20:42:00','Approve',6,1,13,44),(71,'2022-12-26 20:42:00','Approve',6,1,13,44),(72,'2022-12-26 20:42:00','Approve',6,1,13,44),(73,'2022-12-26 20:42:00','Approve',6,1,13,44),(74,'2022-12-26 20:42:00','Reject',0,1,13,44),(77,'2022-12-26 20:42:00','Approve',7,1,13,44),(78,'2022-12-26 20:42:00','Reject',7,1,13,44),(79,'2022-12-26 20:42:00','Reject',7,1,13,44),(81,'2023-01-05 08:00:06','NEW',0,7,13,44),(82,'2023-01-10 08:30:57','NEW',0,1,13,44),(84,'2023-01-17 08:30:01','NEW',0,2,3,55),(85,'2023-01-18 08:30:51','NEW',0,4,3,55),(89,'2023-01-24 09:30:57','NEW',0,3,5,54),(90,'2023-01-24 09:30:57','NEW',0,3,5,54),(91,'2023-01-24 09:30:57','NEW',0,3,5,54);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,6 +80,7 @@ DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `cusID` int NOT NULL AUTO_INCREMENT,
   `cusName` varchar(50) NOT NULL,
+  `cusAddress` varchar(200) NOT NULL,
   `cusMyKad` varchar(12) NOT NULL,
   `cusPhoneNo` varchar(10) DEFAULT NULL,
   `cusEmail` varchar(20) NOT NULL,
@@ -90,7 +91,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`cusID`),
   UNIQUE KEY `cusMyKad_UNIQUE` (`cusMyKad`),
   KEY `carID_idx` (`cusCarType`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +100,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (4,'Johan','780914085902','0173867441','emirates@gmail.com','78091408590225d55ad283aa400af464c76d713c07ad',15,'VB6258',8000),(6,'saiful','801203165741','0112545632','sai.full@gmail.com','',21,'CAS 5214',55000),(8,'imran','110922160147','0172595499','imran@gmail.com','',13,'WWQ 5214',4000),(9,'sufian','850505014217','0134632561','padubeb@yahoo.com','',4,'BAS 526',55000),(33,'sasda','353245234542','0172595499','a@gmail.com','',10,'wwe 1234',150000),(36,'fhfdgh','894321321568','0172595499','b@gmail.com','',23,'juj 5521',5000),(44,'mohd syafid abdullah','780814015771','0126760976','syafid@gmail.com','78081401577125d55ad283aa400af464c76d713c07ad',13,'wb5971n',15000);
+INSERT INTO `customer` VALUES (4,'Johan','','780914085902','0173867441','emirates@gmail.com','78091408590225d55ad283aa400af464c76d713c07ad',15,'VB6258',8000),(6,'saiful','','801203165741','0112545632','sai.full@gmail.com','',21,'CAS 5214',55000),(8,'imran','','110922160147','0172595499','imran@gmail.com','',13,'WWQ 5214',4000),(9,'sufian','','850505014217','0134632561','padubeb@yahoo.com','',4,'BAS 526',55000),(33,'sasda','','353245234542','0172595499','a@gmail.com','',10,'wwe 1234',150000),(36,'fhfdgh','','894321321568','0172595499','b@gmail.com','',23,'juj 5521',5000),(44,'mohd syafid abdullah','25 Jalan Seri Permaisuri, Taman Sri Petaling Kuala Lumpur','780814015771','0126760976','syafid@gmail.com','78081401577125d55ad283aa400af464c76d713c07ad',13,'wb5971n',15000),(51,'mastura mohammad amin','','780914085904','0173863441','mastura@gmail.com','78091408590425d55ad283aa400af464c76d713c07ad',22,'RIMAU 4432',15000),(53,'xxx','24 Persiaran Perdana, Precint 3 Putrajaya','601234123412','0011223355','xxx2@abc.com','60123412341225d55ad283aa400af464c76d713c07ad',11,'JHJ 2019',44000),(54,'Ahmad Bin Osman','','721204016221','0134521032','a_osman@gmail.com','72120401622125d55ad283aa400af464c76d713c07ad',5,'WB7899B',20000),(55,'Salmiah Hussien','Blok A4-3 Pangsapuri Kenanga, Taman Setiawangsa, KL','700805046113','0104256322','salmy@yahoo.com','70080504611325d55ad283aa400af464c76d713c07ad',3,'BRA2030',10000);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-26  9:58:01
+-- Dump completed on 2023-01-22  8:21:32

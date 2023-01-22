@@ -9,14 +9,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
+import connection.ConnectionManager;
 import user.User;
 import login.Login;
+import connection.ConnectionManager;
 
 public class DaoCustomerLogin {
-	public static String url = "jdbc:mysql:/csc584";
-    public static String user = "root";
-    public static String password = "p@ssw0rd1234";
+//	public static String url = "jdbc:mysql:/csc584";
+//    public static String user = "root";
+//    public static String password = "p@ssw0rd1234";
     public String message = null;
      
     
@@ -57,14 +58,17 @@ public class DaoCustomerLogin {
 			ArrayList<Customer> arrlogin = new ArrayList<Customer>();
 
 			try {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//				try {
+//					Class.forName("com.mysql.cj.jdbc.Driver");
+//				} catch (ClassNotFoundException e) {
+//					
+//					e.printStackTrace();
+//					
+//				}
+//				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
+				 
 				 String sql = "SELECT cusID, cusName, cusMyKad, cusEmail, cusPasswd, cusCarType, cusCarPlate, cusCurrMileage FROM customer where cusEmail ='" +email+ "'";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
@@ -99,14 +103,17 @@ public class DaoCustomerLogin {
 		ArrayList<Customer> cusSess = new ArrayList<Customer>();
 		
 		try {
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				
-				e.printStackTrace();
-				
-			}
-			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//			try {
+//				Class.forName("com.mysql.cj.jdbc.Driver");
+//			} catch (ClassNotFoundException e) {
+//				
+//				e.printStackTrace();
+//				
+//			}
+//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 ConnectionManager cm = new ConnectionManager();
+			 Connection conn = cm.getConnection();
+			 
 			 String sql = "SELECT cusID, cusName, cusMyKad, cusEmail, cusPasswd, cusCarType, cusCarPlate, cusCurrMileage FROM customer where cusID ='" +cusID+ "';";
 	         Statement statement = conn.createStatement();
 	         ResultSet result = statement.executeQuery(sql);

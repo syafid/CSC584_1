@@ -39,6 +39,15 @@
 					 	<label for="userPassword" class="col-sm-3 col-form-label">Staff Password</label>
 					 	<input type="password" name="userPassword" size="8" maxlength="8" required="required"><p class="text-danger"> *8 character password only</p>
  					</div>
+ 					<div class="form-group row"> 
+					 	<label for="roles" class="col-sm-3 col-form-label">Staff Roles</label>
+					 	<select name="roles" id="roles" required="required">
+					 	    <option disabled selected value>Please Choose </option>
+					        <option value="supervisor">Supervisor</option>
+					        <option value="technician">Technician</option>
+					        
+					      </select>
+					</div>      
  				
  				
  				<button type="submit" class="btn btn-primary">Submit</button>    

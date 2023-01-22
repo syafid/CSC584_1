@@ -2,6 +2,7 @@ package user;
 
 
 import java.security.MessageDigest;
+import connection.ConnectionManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,41 +15,25 @@ import java.util.Iterator;
 
 public class DaoUser {
 
-	//private Connection conn;
-//	private String url;
-//	private String user;
-//	private String password;
-	public String url = "jdbc:mysql:/csc584";
-    public String user = "root";
-    public String password = "p@ssw0rd1234";
+
     public String message = null;
 
 	public ArrayList<User> getResultSet() {
 
-//			String url = "jdbc:mysql:/csc584";
-//		    String user = "root";
-//		    String password = "p@ssw0rd1234";
-			//Connection conn;// = null;
+
 			ArrayList<User> service = new ArrayList<User>();
 
-			try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			try {
+
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
+				 
 				 String sql = "SELECT cusID,cusName FROM customer";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
 
 		         while (result.next()) {
-		        	 //int i = 0;
-		//        	 serviceID = result.getInt("serviceID");
-		//        	 serviceName = result.getString("serviceName");
-		//        	 AppointmentAdd appAdd = new AppointmentAdd(result.getInt("serviceID"),result.getString("serviceName"));
+
 		        	 User user = new User();
 		        	 user.setUserName(result.getString("username"));
 		        	 
@@ -68,14 +53,17 @@ public class DaoUser {
 		ArrayList<User> userArr = new ArrayList<User>();
 
 		try {
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			}
-			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//			try {
+//				Class.forName("com.mysql.cj.jdbc.Driver");
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				
+//			}
+//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 ConnectionManager cm = new ConnectionManager();
+			 Connection conn = cm.getConnection();
+			 
 			 String sql = "SELECT userID, userName, userAccessLevel FROM user where userAccessLevel = 'technician';";
 	         Statement statement = conn.createStatement();
 	         ResultSet result = statement.executeQuery(sql);
@@ -112,14 +100,17 @@ public class DaoUser {
 		ArrayList<User> userDetail = new ArrayList<User>();
 
 		try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			}
-			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//			try {
+//				Class.forName("com.mysql.cj.jdbc.Driver");
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				
+//			}
+//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 ConnectionManager cm = new ConnectionManager();
+			 Connection conn = cm.getConnection();
+			 
 			 String sql = "SELECT userID, userName, userIdentificationNo, userContactNo, userDateOfBirth, userEmail, userPassword, userAccessLevel FROM user where userID ='" +UserID+ "';";
 	         Statement statement = conn.createStatement();
 	         ResultSet result = statement.executeQuery(sql);
@@ -149,20 +140,24 @@ public class DaoUser {
 }
 //
 	public String CreateUser(ArrayList<User> newuser) throws SQLException {
-		Connection conn = null;
+//		Connection conn = null;
 		String encryptedpassword = null;  
+		
+		 ConnectionManager cm = new ConnectionManager();
+		 Connection conn = cm.getConnection();
+		 
 		for(int i=0;i<newuser.size();i++)
 		{
 			//System.out.println(newcustomer.get(i).getCusName());
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			conn = (Connection) DriverManager.getConnection(url, user, password);
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			
+//		}
 		
 		try {	
 			String userpass = newuser.get(i).getUserPassword();
@@ -179,8 +174,8 @@ public class DaoUser {
 			
 			
 			
-		 String query = " insert into user (userName, userIdentificationNo, userContactNo, userDateOfBirth, userEmail, userPassword)"
-		        + " values (?, ?, ?, ?, ?, ?)";
+		 String query = " insert into user (userName, userIdentificationNo, userContactNo, userDateOfBirth, userEmail, userPassword, userAccessLevel)"
+		        + " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		 // create the mysql insert preparedstatement
 	      PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -190,6 +185,7 @@ public class DaoUser {
 	      preparedStmt.setString (4, newuser.get(i).getUserDateOfBirth());
 	      preparedStmt.setString (5, newuser.get(i).getUserEmail());
 	      preparedStmt.setString (6, encryptedpassword);
+	      preparedStmt.setString (7, newuser.get(i).getUserRoles());
 	      
 	      
 	   // execute the preparedstatement

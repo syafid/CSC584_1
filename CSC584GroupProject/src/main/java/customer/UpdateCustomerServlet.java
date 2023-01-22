@@ -11,20 +11,20 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import appointment.DaoAppointment;
 import car.DaoCar;
+import customer.Customer;
 
 /**
- * Servlet implementation class CustomerServlet
+ * Servlet implementation class UpdateCustomerServlet
  */
-//@WebServlet("/RegisterCustomerServlet")
-public class RegisterCustomerServlet extends HttpServlet {
+//@WebServlet("/UpdateCustomerServlet")
+public class UpdateCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterCustomerServlet() {
+    public UpdateCustomerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +32,15 @@ public class RegisterCustomerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    
-    
-    
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		//response.getWriter().append("Served at: ").append(request.getContextPath());
-//
-//	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		int cusID = Integer.parseInt(request.getParameter("cusID"));
+		HttpSession session = request.getSession();
+		session.setAttribute("cusID",cusID);
+		RequestDispatcher dis=getServletContext().getRequestDispatcher("/registration/UpdateCustomer.jsp");
+		 dis.forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,49 +51,50 @@ public class RegisterCustomerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Customer cust = new Customer();
 		ArrayList<Customer> newcustomer = new ArrayList<Customer>();
-				
+		
+		String email = request.getParameter("custEmail");
+			
+		cust.setCusID(Integer.parseInt(request.getParameter("cusID")));
 		cust.setCusName(request.getParameter("custName"));
+		cust.setCusAdd(request.getParameter("custAddress"));
 		cust.setCusMyKad(request.getParameter("custMyKad"));
 		cust.setCusPhoneNo(request.getParameter("custPhoneNo"));
-		cust.setCusAdd(request.getParameter("custAddress"));
-		cust.setCusEmail(request.getParameter("custEmail"));
 		cust.setCusCarType(Integer.parseInt(request.getParameter("car")));
-		cust.setCusCarNo(request.getParameter("custCarPlate"));
 		cust.setCusCurrMileage(Integer.parseInt(request.getParameter("custCarMileage")));
-		cust.setCusPasswd(request.getParameter("custPasswd"));
+		cust.setCusCarNo(request.getParameter("custCarPlate"));
+		
+		
 		newcustomer.add(cust);
 		
-		
 		try {
-			DaoCust DBIns = new DaoCust();
-			String message = DBIns.CreateCustomer(newcustomer);
+			DaoCust updateCus = new DaoCust();
+			String message = updateCus.UpdateCustomer(newcustomer);
+			
 			if(message=="success") {
 				String alert = "success";
-				response.setContentType("text/html");
+				//response.setContentType("text/html");
 				session.setAttribute("message",alert);
-				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
+				session.setAttribute("email",email);
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 				 dis.forward(request, response);
 				
 			}
 			else
 			{
-				String alert = "alert-danger";
-				response.setContentType("text/html");
+				String alert = "error";
+				//response.setContentType("text/html");
 				request.setAttribute("message",alert);
-				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
+				session.setAttribute("email",email);
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 				 dis.forward(request, response);
 				
 			}
 			
 		}
 		catch(Exception e) {
-			 //e.printStackTrace();
-			String alert1 = "alert-danger" + e;
-			response.setContentType("text/html");
-			request.setAttribute("message_error",alert1);
-			RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
-			 dis.forward(request, response);
+			 e.printStackTrace();
+			
 		}
 	}
-
 }
+

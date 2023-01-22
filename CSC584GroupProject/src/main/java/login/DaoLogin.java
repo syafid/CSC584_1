@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
+import connection.ConnectionManager;
 import user.User;
 import login.Login;
 
 public class DaoLogin {
-	public static String url = "jdbc:mysql:/csc584";
-    public static String user = "root";
-    public static String password = "p@ssw0rd1234";
+//	public static String url = "jdbc:mysql:/csc584";
+//    public static String user = "root";
+//    public static String password = "p@ssw0rd1234";
     public String message = null;
      
     
@@ -56,14 +56,17 @@ public class DaoLogin {
 			ArrayList<Login> arrlogin = new ArrayList<Login>();
 			
 			try {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//				try {
+//					Class.forName("com.mysql.cj.jdbc.Driver");
+//				} catch (ClassNotFoundException e) {
+//					
+//					e.printStackTrace();
+//					
+//				}
+//				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
+				 
 				 String sql = "SELECT userID, userName, userIdentificationNo, userContactNo, userDateOfBirth, userEmail, userPassword, userAccessLevel FROM user where userEmail ='" +email+ "';";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);

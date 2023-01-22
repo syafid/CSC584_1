@@ -99,4 +99,24 @@
     <servlet-name>AppointmentCancel</servlet-name>
     <url-pattern>/AppointmentCancel</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateCustomerServlet</display-name>
+    <servlet-name>UpdateCustomerServlet</servlet-name>
+    <servlet-class>customer.UpdateCustomerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateCustomerServlet</servlet-name>
+    <url-pattern>/UpdateCustomerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RegisterCustomerServlet</display-name>
+    <servlet-name>RegisterCustomerServlet</servlet-name>
+    <servlet-class>customer.RegisterCustomerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterCustomerServlet</servlet-name>
+    <url-pattern>/customer/RegisterCustomerServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

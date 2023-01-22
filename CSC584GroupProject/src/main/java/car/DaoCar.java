@@ -2,6 +2,7 @@ package car;
 
 
 import java.sql.Connection;
+import connection.ConnectionManager;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +13,9 @@ import java.util.HashSet;
 
 public class DaoCar {
 
-	public static String url = "jdbc:mysql:/csc584";
-    public static String user = "root";
-    public static String password = "p@ssw0rd1234";
+//	public static String url = "jdbc:mysql:/csc584";
+//    public static String user = "root";
+//    public static String password = "p@ssw0rd1234";
 
 	public static ArrayList<Car> getResultSet() {
 
@@ -24,14 +25,16 @@ public class DaoCar {
 			
 
 			try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//				try {
+//					Class.forName("com.mysql.cj.jdbc.Driver");
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					
+//				}
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
+				 //Connection conn = (Connection) DriverManager.getConnection(url, user, password);
 				 String sql = "SELECT distinct carID,carModel,carVariant,carTransmission FROM car";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
@@ -62,14 +65,16 @@ public class DaoCar {
 		
 		ArrayList<Car> carName = new ArrayList<Car>();
 		try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			}
-			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//			try {
+//				Class.forName("com.mysql.cj.jdbc.Driver");
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				
+//			}
+//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			 ConnectionManager cm = new ConnectionManager();
+			 Connection conn = cm.getConnection();
 			 String sql = "SELECT carID, carModel, carVariant, carTransmission FROM car where carID ='" +carType+ "';";
 	         Statement statement = conn.createStatement();
 	         ResultSet result = statement.executeQuery(sql);

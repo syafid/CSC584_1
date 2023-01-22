@@ -54,6 +54,7 @@ public class UserServlet extends HttpServlet {
 		user.setUserDateOfBirth(request.getParameter("userDOB"));
 		user.setUserEmail(request.getParameter("userEmail"));
 		user.setUserPassword(request.getParameter("userPassword"));
+		user.setUserRoles(request.getParameter("roles"));
 		newuser.add(user);
 		
 		try {

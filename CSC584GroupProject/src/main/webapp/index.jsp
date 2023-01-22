@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="customer.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +15,21 @@
 		href="style3.css" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
 	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet" />
-	<title>CSC584 PROJECT PROPOSAL</title>
+	<title>CSC584 GROUP PROJECT</title>
 </head>
 <body>
-	<section id="navbar">
+<section id="navbar">
+<%if (request.getAttribute("message") == "success") { %>
+<div class="alert alert-success" role="alert"><h3>
+ New user added. User can login to use the system. Thank You.
+</h3></div>
+<%}%>
+
+<%if (request.getAttribute("message") == "error") { %>
+<div class="alert alert-danger" role="alert">
+ Error When Add New User. Please Try Again Later
+</div><br>
+<%}%>
 	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="container-fluid">
 		<a class="navbar-brand" href="#">

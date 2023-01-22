@@ -13,6 +13,7 @@ public class User {
 	public String userEmail;
 	public String userPassword;
 	public String userAccessLevel;
+	public String userRoles;
 	
 	public int getUserID() {
 		return userID;
@@ -61,6 +62,12 @@ public class User {
 	}
 	public void setUserAccessLevel(String userAccessLevel) {
 		this.userAccessLevel = userAccessLevel;
+	}
+	public String getUserRoles() {
+		return userRoles;
+	}
+	public void setUserRoles(String userRoles) {
+		this.userRoles = userRoles;
 	}
 	
 	

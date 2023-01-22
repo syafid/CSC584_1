@@ -1,7 +1,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.HashSet"%>
-<%@page import="customer.Customer" %>
-<%@page import="car.Car" %>
+<%@page import="customer.*" %>
+<%@page import="car.*" %>
 
 
 <!DOCTYPE html>
@@ -31,6 +31,11 @@
   <div class="form-group row"> 
  	<label for="custPhoneNo" class="col-sm-3 col-form-label">Mobile No</label>
  	<input type="text" name="custPhoneNo" size="10" maxlength="10" required="required">
+ </div>
+ 
+  <div class="form-group row"> 
+ 	<label for="custAddress" class="col-sm-3 col-form-label">Address</label>
+ 	<textarea name="custAddress" rows="4" cols="50" required="required"></textarea>
  </div>
  
 
@@ -80,7 +85,7 @@
 <!--       </div> -->
 <!--  </div> -->
      
- <button type="submit" class="btn btn-primary">Submit</button>    
+ <button type="submit" class="btn btn-primary" name="newCust">Submit</button>    
  </form> 
 </div>
 

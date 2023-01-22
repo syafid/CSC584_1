@@ -3,6 +3,7 @@ package customer;
 public class Customer {
 	public int CusID;
 	public String CusName;
+	public String CusAdd;
 	public String CusMyKad;
 	public String CusPhoneNo;
 	public String CusEmail;
@@ -71,6 +72,12 @@ public class Customer {
 	}
 	public void setCusPasswd(String cusPasswd) {
 		CusPasswd = cusPasswd;
+	}
+	public String getCusAdd() {
+		return CusAdd;
+	}
+	public void setCusAdd(String cusAdd) {
+		CusAdd = cusAdd;
 	}
 	
 

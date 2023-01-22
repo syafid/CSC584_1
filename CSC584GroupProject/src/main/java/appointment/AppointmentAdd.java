@@ -132,7 +132,7 @@ public class AppointmentAdd extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("email",cusEmail);
 				session.setAttribute("message",alert);
-				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 				dis.forward( request, response);
 				 //dis.forward(request, response);
 				//return; 
@@ -150,7 +150,7 @@ public class AppointmentAdd extends HttpServlet {
 					HttpSession session = request.getSession();
 					session.setAttribute("email",cusEmail);
 					session.setAttribute("message",alert);
-					RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
+					RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 					 dis.forward(request, response);
 					 return;
 					 
@@ -170,11 +170,6 @@ public class AppointmentAdd extends HttpServlet {
 		
 		
 	}
-	
-//	private String modifyDateLayout(String inputDate) throws ParseException{
-//	    Date date = (Date)new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(inputDate);
-//	    return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(date);
-//	}
 
 }
 

@@ -2,6 +2,7 @@ package customer;
 
 
 import java.security.MessageDigest;
+import connection.ConnectionManager;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,41 +15,28 @@ import java.util.Iterator;
 
 public class DaoCust {
 
-	
-	public String url = "jdbc:mysql:/csc584";
-    public String user = "root";
-    public String password = "p@ssw0rd1234";
     public String message = null;
 
 	public ArrayList<Customer> getResultSet(String email) {
 
 		ArrayList<Customer> service = new ArrayList<Customer>();
 
-			try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			try {
+
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
 				 String sql = "SELECT cusID,cusName,cusEmail FROM customer where cusEmail = '"+email+"'";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
 
 		         while (result.next()) {
-		        	 //int i = 0;
-		//        	 serviceID = result.getInt("serviceID");
-		//        	 serviceName = result.getString("serviceName");
-		//        	 AppointmentAdd appAdd = new AppointmentAdd(result.getInt("serviceID"),result.getString("serviceName"));
+		
 		        	 Customer cust = new Customer();
 		        	 cust.setCusName(result.getString("cusName"));
 		        	 cust.setCusID(Integer.parseInt(result.getString("cusID")));
 		             service.add(cust);
 		             System.out.println(sql);
-		             //System.out.println(result.getString(2));
-		             //i++;
+		            
 		             }
 			}
 			catch (SQLException e) {
@@ -61,21 +49,14 @@ public class DaoCust {
 
 
 	public String CreateCustomer(ArrayList<Customer> newcustomer) throws SQLException {
-		Connection conn = null;
+	
 		String encryptedpassword = null;
 		
 		for(int i=0;i<newcustomer.size();i++)
 		{
-			//System.out.println(newcustomer.get(i).getCusName());
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			
-		}
+			ConnectionManager cm = new ConnectionManager();
+			Connection conn = cm.getConnection();
 		
 		
 		
@@ -93,19 +74,20 @@ public class DaoCust {
             }  
             encryptedpassword = s.toString();
             
-		 String query = " insert into customer (cusName, cusMyKad, cusPhoneNo, cusEmail, cusCarType, cusCarPlate, cusCurrMileage, cusPasswd)"
-		        + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		 String query = " insert into customer (cusName, cusAddress, cusMyKad, cusPhoneNo, cusEmail, cusCarType, cusCarPlate, cusCurrMileage, cusPasswd)"
+		        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		 // create the mysql insert preparedstatement
 	      PreparedStatement preparedStmt = conn.prepareStatement(query);
 	      preparedStmt.setString (1, newcustomer.get(i).getCusName());
-	      preparedStmt.setString (2, newcustomer.get(i).getCusMyKad());
-	      preparedStmt.setString (3, newcustomer.get(i).getCusPhoneNo());
-	      preparedStmt.setString (4, newcustomer.get(i).getCusEmail());
-	      preparedStmt.setInt    (5, newcustomer.get(i).getCusCarType());
-	      preparedStmt.setString (6, newcustomer.get(i).getCusCarPlate());
-	      preparedStmt.setInt    (7, newcustomer.get(i).getCusCurrMileage());
-	      preparedStmt.setString (8, encryptedpassword);
+	      preparedStmt.setString (2, newcustomer.get(i).getCusAdd());
+	      preparedStmt.setString (3, newcustomer.get(i).getCusMyKad());
+	      preparedStmt.setString (4, newcustomer.get(i).getCusPhoneNo());
+	      preparedStmt.setString (5, newcustomer.get(i).getCusEmail());
+	      preparedStmt.setInt    (6, newcustomer.get(i).getCusCarType());
+	      preparedStmt.setString (7, newcustomer.get(i).getCusCarPlate());
+	      preparedStmt.setInt    (8, newcustomer.get(i).getCusCurrMileage());
+	      preparedStmt.setString (9, encryptedpassword);
 	      
 	   // execute the preparedstatement
 	      //preparedStmt.execute();
@@ -133,6 +115,52 @@ public class DaoCust {
 		
 	}
 	
+	public String UpdateCustomer(ArrayList<Customer> updcustomer) throws SQLException {
+		for(int i=0;i<updcustomer.size();i++)
+		{
+
+
+			 ConnectionManager cm = new ConnectionManager();
+			 Connection conn = cm.getConnection();
+			 String query = "UPDATE customer SET cusName=?, cusAddress=?, cusMyKad=?, cusPhoneNo=?, cusCarType=?, cusCarPlate=?, cusCurrMileage=?  WHERE cusID=?";
+			
+			
+		      PreparedStatement preparedStmt = conn.prepareStatement(query);
+		      
+		      preparedStmt.setString(1, updcustomer.get(i).getCusName());
+		      preparedStmt.setString (2, updcustomer.get(i).getCusAdd());
+		      preparedStmt.setString(3, updcustomer.get(i).getCusMyKad());
+		      preparedStmt.setString(4, updcustomer.get(i).getCusPhoneNo());
+		      preparedStmt.setInt(5, updcustomer.get(i).getCusCarType());
+		      preparedStmt.setString(6, updcustomer.get(i).getCusCarPlate());
+		      preparedStmt.setInt(7, updcustomer.get(i).getCusCurrMileage());
+		      preparedStmt.setInt(8, updcustomer.get(i).getCusID());
+		      
+		      boolean rowInserted = preparedStmt.executeUpdate() > 0;
+		      
+		     
+		        if (rowInserted) {
+		            message = "success";
+		        } else {
+		            message = "error";
+		        }
+		      System.out.println(query);
+		      System.out.println(message);
+		      
+		      preparedStmt.close();
+		      conn.close();
+		      
+		
+		
+	
+		
+			}
+		
+		return message;
+		
+		
+		
+	}
 	
 	
 	public ArrayList<Customer> getCustomer(int cusID) {
@@ -140,15 +168,18 @@ public class DaoCust {
 		ArrayList<Customer> CustList = new ArrayList<Customer>();
 
 			try {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					
-				}
-				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
-				 String sql = "SELECT cusID, cusName, cusMyKad, cusPhoneNo, cusEmail, cusCarType, cusCarPlate, cusCurrMileage FROM customer where cusID = '"+cusID+"'";
+//				try {
+//					Class.forName("com.mysql.cj.jdbc.Driver");
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					
+//				}
+//				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+				 ConnectionManager cm = new ConnectionManager();
+				 Connection conn = cm.getConnection();
+				 
+				 String sql = "SELECT cusID, cusName, cusAddress, cusMyKad, cusPhoneNo, cusEmail, cusCarType, cusCarPlate, cusCurrMileage FROM customer where cusID = '"+cusID+"'";
 		         Statement statement = conn.createStatement();
 		         ResultSet result = statement.executeQuery(sql);
 		         Customer cust = new Customer();
@@ -157,6 +188,7 @@ public class DaoCust {
 		        	
 		        	 cust.setCusName(result.getString("cusName"));
 		        	 cust.setCusID(Integer.parseInt(result.getString("cusID")));
+		        	 cust.setCusAdd(result.getString("cusAddress"));
 		        	 cust.setCusMyKad(result.getString("cusMyKad"));
 		        	 cust.setCusPhoneNo(result.getString("cusPhoneNo"));
 		        	 cust.setCusEmail(result.getString("cusEmail"));

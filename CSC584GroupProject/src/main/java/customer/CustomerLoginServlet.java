@@ -73,7 +73,7 @@ public class CustomerLoginServlet extends HttpServlet {
 			//HttpSession session = request.getSession();
             //session.setAttribute("email", emailC);
 			request.getSession().setAttribute("email",emailC);
-			RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
+			RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 			 dis.forward(request, response);
 			
 		}

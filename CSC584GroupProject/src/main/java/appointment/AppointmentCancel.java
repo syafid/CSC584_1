@@ -42,7 +42,7 @@ public class AppointmentCancel extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// response.setContentType("text/html");
+	
 		HttpSession session = request.getSession();
 		ArrayList<Appointment> newappoint = new ArrayList<Appointment>();
 		Appointment appoint = new Appointment();
@@ -58,24 +58,24 @@ public class AppointmentCancel extends HttpServlet {
 		try {
 			alert = updApptStat.DelAppoint(newappoint);
 			if(alert == "success") {
-			//HttpSession session = request.getSession();
+			
 			session.setAttribute("email",cusEmail);
 			session.setAttribute("messageDeleteSuccess",alert);
-			RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
+			RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 			dis.forward( request, response);
 			
 			}
 			else {
 				
-				//HttpSession session = request.getSession();
+				
 				session.setAttribute("email",cusEmail);
 				session.setAttribute("messageDeleteError",alert);
-				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboardCustomer.jsp");
+				RequestDispatcher dis=getServletContext().getRequestDispatcher("/customer/dashboardCustomer.jsp");
 				dis.forward( request, response);
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		

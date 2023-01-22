@@ -83,7 +83,7 @@
           <span class="nav-item">New Appointment</span>
         </a></li>
        
-        <li><a href="<%=referer %>">
+        <li><a href="#">
           <i class="fas fa-comment"></i>
           <span class="nav-item">Message</span>
         </a></li>
@@ -104,12 +104,7 @@
           <i class="fas fa-sign-out-alt"></i>
           <span class="nav-item">Log out</span>
         </a></li>
-        
-<!--         <li> -->
-<!--         <form action="LogoutServlet"> -->
-<!-- 					<input type="submit" class="fas fa-sign-out-alt"> -->
-<!-- 				</form> -->
-<!--         </li> -->
+      
       </ul>
     </nav>
     
