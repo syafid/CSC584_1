@@ -92,17 +92,7 @@ public class AppointmentAdd extends HttpServlet {
 		System.out.println("Date > " +temp);
 		System.out.println("Time > " +time);
 		Date date = null;
-//		
-//		f = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-//		formatterTime = new SimpleDateFormat("hh:mm",Locale.ENGLISH);
-		
-		//newDate = f.format(temp);
-//        try {
-//			date = (Date) f.parse(newDate);
-//		} catch (ParseException e1) {
-//			e1.printStackTrace();
-//		}
-		//String startingDate = new SimpleDateFormat("YYYY-MM-DD").format(temp);
+
 		String newDate = temp+' '+time;
 		Timestamp dt = Timestamp.valueOf(newDate);//.of(startingDate, startingTime);
 		

@@ -18,9 +18,7 @@ import connection.ConnectionManager;
 
 
 public class DaoAppointment {
-	//String url = "jdbc:mysql:/csc584";
-    //String user = "root";
-    //String password = "p@ssw0rd1234";
+	
     public String message = null;
 
     
@@ -31,15 +29,7 @@ public class DaoAppointment {
 			//Connection conn;// = null;
 			ArrayList<Appointment> service = new ArrayList<Appointment>();
 
-			try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-//				try {
-//					Class.forName("com.mysql.cj.jdbc.Driver");
-//				} catch (ClassNotFoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					
-//				}
-				//Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+			try {
 				 ConnectionManager cm = new ConnectionManager();
 				 Connection conn = cm.getConnection();
 				 String sql = "SELECT serviceID, serviceName FROM service";
@@ -70,14 +60,7 @@ public class DaoAppointment {
 		for(int i=0;i<newappointment.size();i++)
 		{
 
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//				conn = (Connection) DriverManager.getConnection(url, user, password);
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
+
 			
 			 ConnectionManager cm = new ConnectionManager();
 			 Connection conn = cm.getConnection();
@@ -126,14 +109,7 @@ public class DaoAppointment {
 	public ArrayList<Appointment> AppointList(int cusID) throws SQLException {
 		ArrayList<Appointment> appointment = new ArrayList<Appointment>();
 		try {
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
-			//Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+//			
 			 ConnectionManager cm = new ConnectionManager();
 			 Connection conn = cm.getConnection();
 			 
@@ -169,15 +145,7 @@ public class DaoAppointment {
 	public ArrayList<Appointment> getAppointment() throws SQLException {
 		ArrayList<Appointment> appointment = new ArrayList<Appointment>();
 		try {
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
-			
-//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+
 			 ConnectionManager cm = new ConnectionManager();
 			 Connection conn = cm.getConnection();
 			 String sql = "SELECT appID, appDateTime, appStatus, empID, serviceID, carID, cusID FROM appointment where appStatus='NEW' or appStatus='Approve' ORDER BY appStatus";
@@ -256,20 +224,9 @@ public String UpdAppoint(ArrayList<Appointment> newappointment) throws SQLExcept
 //GET APPOINTMENT BY ID//
 public ArrayList<Appointment> GetAppt(int AppID) throws SQLException { 
 	ArrayList<Appointment> appointment = new ArrayList<Appointment>();
-	//Connection conn = null;
-	
-	
-	
 
 		try {
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//				conn = (Connection) DriverManager.getConnection(url, user, password);
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
+
 			ConnectionManager cm = new ConnectionManager();
 			Connection conn = cm.getConnection();
 			 
@@ -318,23 +275,11 @@ public ArrayList<Appointment> GetAppt(int AppID) throws SQLException {
 
 //DELETE APPOINTMENT BY CUSTOMER//
 public String DelAppoint(ArrayList<Appointment> newappointment) throws SQLException { 
-	
-	//Connection conn = null;
-	
-	
+
 	for(int i=0;i<newappointment.size();i++)
 	{
 
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			conn = (Connection) DriverManager.getConnection(url, user, password);
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			
-//		}
-		
-//		
+
 		 ConnectionManager cm = new ConnectionManager();
 		 Connection conn = cm.getConnection();
 		 
@@ -373,14 +318,7 @@ public String DelAppoint(ArrayList<Appointment> newappointment) throws SQLExcept
 public ArrayList<Appointment> AppointListByTech(int empID) throws SQLException {
 	ArrayList<Appointment> appointment = new ArrayList<Appointment>();
 	try {
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			
-//		}
-//		Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+
 		 ConnectionManager cm = new ConnectionManager();
 		 Connection conn = cm.getConnection();
 		 String sql = "SELECT appID, appDateTime, appStatus, empID, serviceID, carID, cusID FROM appointment where appStatus='Approve' and empID="+empID+"";

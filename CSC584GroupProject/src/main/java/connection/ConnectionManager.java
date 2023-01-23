@@ -1,7 +1,3 @@
-/**
- * Author: Fadilah Ezlina Shahbudin (fadilahezlina@uitm.edu.my)
- * Date:28 June 2022
- */
 package connection;
 
 import java.sql.*;
@@ -9,8 +5,8 @@ import java.sql.*;
 public class ConnectionManager {
 
     private static Connection con;
-    private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";//"com.mysql.jdbc.Driver";
-    private static final String DB_CONNECTION = "jdbc:mysql:/csc584";//"jdbc:mysql://localhost/myproject";
+    private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DB_CONNECTION = "jdbc:mysql:/csc584";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "p@ssw0rd1234";
     

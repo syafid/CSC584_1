@@ -53,14 +53,7 @@ public class DaoUser {
 		ArrayList<User> userArr = new ArrayList<User>();
 
 		try {
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
-//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+
 			 ConnectionManager cm = new ConnectionManager();
 			 Connection conn = cm.getConnection();
 			 
@@ -93,21 +86,11 @@ public class DaoUser {
 //	
 	public ArrayList<User> getUser(int UserID) {
 
-//		String url = "jdbc:mysql:/csc584";
-//	    String user = "root";
-//	    String password = "p@ssw0rd1234";
-		//Connection conn;// = null;
+
 		ArrayList<User> userDetail = new ArrayList<User>();
 
-		try /*(Connection con = DriverManager.getConnection(url, user, password))*/{
-//			try {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//			} catch (ClassNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				
-//			}
-//			Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+		try {
+
 			 ConnectionManager cm = new ConnectionManager();
 			 Connection conn = cm.getConnection();
 			 
@@ -116,10 +99,7 @@ public class DaoUser {
 	         ResultSet result = statement.executeQuery(sql);
 	         User user = new User();
 	         while (result.next()) {
-	        	 //int i = 0;
-	//        	 serviceID = result.getInt("serviceID");
-	//        	 serviceName = result.getString("serviceName");
-	//        	 AppointmentAdd appAdd = new AppointmentAdd(result.getInt("serviceID"),result.getString("serviceName"));
+	
 	        	 
 	        	 user.setUserID(result.getInt("userID"));
 	        	 user.setUserName(result.getString("userName"));
@@ -148,16 +128,7 @@ public class DaoUser {
 		 
 		for(int i=0;i<newuser.size();i++)
 		{
-			//System.out.println(newcustomer.get(i).getCusName());
-
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			conn = (Connection) DriverManager.getConnection(url, user, password);
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			
-//		}
+			
 		
 		try {	
 			String userpass = newuser.get(i).getUserPassword();

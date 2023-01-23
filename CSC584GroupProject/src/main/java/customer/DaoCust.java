@@ -168,14 +168,7 @@ public class DaoCust {
 		ArrayList<Customer> CustList = new ArrayList<Customer>();
 
 			try {
-//				try {
-//					Class.forName("com.mysql.cj.jdbc.Driver");
-//				} catch (ClassNotFoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					
-//				}
-//				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+
 				 ConnectionManager cm = new ConnectionManager();
 				 Connection conn = cm.getConnection();
 				 
@@ -198,8 +191,7 @@ public class DaoCust {
 		        	 
 		             CustList.add(cust);
 		             System.out.println(sql);
-		             //System.out.println(result.getString(2));
-		             //i++;
+		             
 		             }
 			}
 			catch (SQLException e) {

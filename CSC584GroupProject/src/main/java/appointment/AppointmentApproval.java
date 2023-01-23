@@ -191,14 +191,11 @@ public class AppointmentApproval extends HttpServlet {
 		ArrayList<Appointment> applist = new ArrayList<Appointment>();
 		
 		Appointment appt = new Appointment();
-		String email = request.getParameter("login");  // "2021492334@student.uitm.edu.my";
+		String email = request.getParameter("login");  
 		HttpSession session = request.getSession();
 		String statusButton = request.getParameter("status");
 		int AppID = Integer.parseInt(request.getParameter("AppID"));
 		int cusID = Integer.parseInt(request.getParameter("cusID"));
-		//appt.setAppID(AppID);
-		//appt.setCusID(cusID);
-		//applist.add(appt);
 		
 		pw.println("<table class=table>");
 		pw.println("<thead>");
@@ -276,26 +273,7 @@ public class AppointmentApproval extends HttpServlet {
 		}
 		
 		
-		//hold
-//		if(statusButton == "1") { //case approve appointment
-//		
-//		String AssignTo = request.getParameter("AssignTo");//technician
-//				
-//		appt.setAppID(Integer.parseInt(AppID));
-//		appt.setEmpID(Integer.parseInt(AssignTo));
-//		appt.setAppStatus("Approve");
-//		
-//		applist.add(appt);
-//	}
-//	else if(statusButton == "9"){ //case reject appointment
-//		int newAssignID = 0;
-//		//String AppID = request.getParameter("AppID");
-//		appt.setAppID(Integer.parseInt(AppID));
-//		appt.setEmpID(newAssignID);
-//		appt.setAppStatus("Reject");
-//		applist.add(appt);
-//		
-//	}
+		
 		
 		
 		pw.println("</table>");
@@ -304,50 +282,6 @@ public class AppointmentApproval extends HttpServlet {
 		pw.println("</html>");
 		pw.close();
 		
-//		DaoAppointment updateApp = new DaoAppointment();
-//		ArrayList<Appointment> applist = new ArrayList<Appointment>();
-//		Appointment appt = new Appointment();
-//		String email = "2021492334@student.uitm.edu.my";//request.getParameter("email");
-//		HttpSession session = request.getSession();
-//		
-//		String statusButton = request.getParameter("status");
-//		if(statusButton == "1") { //case approve appointment
-//			String AppID = request.getParameter("AppID");
-//			String AssignTo = request.getParameter("AssignTo");//technician
-//					
-//			appt.setAppID(Integer.parseInt(AppID));
-//			appt.setEmpID(Integer.parseInt(AssignTo));
-//			appt.setAppStatus("Approve");
-//			
-//			applist.add(appt);
-//		}
-//		else if(statusButton == "9"){ //case reject appointment
-//			int newAssignID = 0;
-//			String AppID = request.getParameter("AppID");
-//			appt.setAppID(Integer.parseInt(AppID));
-//			appt.setEmpID(newAssignID);
-//			appt.setAppStatus("Reject");
-//			applist.add(appt);
-//			
-//		}
-//		
-//		try {
-//			message = updateApp.UpdAppoint(applist);
-//			if(message == "success") {  //String message
-//				session.setAttribute("message", message);
-//				session.setAttribute("email",email);
-//				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboard.jsp");
-//				 dis.forward(request, response);
-//			}else { //reject appointment
-//				session.setAttribute("message", message);
-//				session.setAttribute("email",email);
-//				RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/dashboard.jsp");
-//				 dis.forward(request, response);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 }

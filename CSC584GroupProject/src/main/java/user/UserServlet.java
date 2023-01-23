@@ -30,8 +30,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	
 		response.setContentType("text/html");
 		RequestDispatcher dis=getServletContext().getRequestDispatcher("/user/NewUser.jsp");
 		 dis.forward(request, response);
@@ -41,10 +40,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		doGet(request, response);
-//		String username = request.getParameter("userName");
-//		System.out.println(username);
+
 		User user = new User();
 		ArrayList<User> newuser = new ArrayList<User>();
 				
@@ -66,14 +62,7 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("message",alert);
 				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
 				 dis.forward(request, response);
-				// next try
-//				response.setContentType("text/html");
-//				PrintWriter pw=response.getWriter();
-//				pw.println("<script type=\"text/javascript\">");
-//				pw.println("alert('Customer Data Addedd Successfully');");
-//				pw.println("</script>");
-//				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
-//				 dis.forward(request, response);
+			
 			}
 			else
 			{
@@ -82,14 +71,7 @@ public class UserServlet extends HttpServlet {
 				request.setAttribute("message",alert);
 				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
 				 dis.forward(request, response);
-				// next try
-//				response.setContentType("text/html");
-//				PrintWriter pw=response.getWriter();
-//				pw.println("<script type=\"text/javascript\">");
-//				pw.println("alert('Insert Data Error. Please try again.');");
-//				pw.println("</script>");
-//				RequestDispatcher dis=getServletContext().getRequestDispatcher("/index.jsp");
-//				 dis.forward(request, response);
+				
 			}
 			
 		}

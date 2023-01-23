@@ -11,11 +11,6 @@ import java.util.ArrayList;
 
 
 public class DaoService {
-	
-//	public static String url = "jdbc:mysql:/csc584";
-//    public static String user = "root";
-//    public static String password = "p@ssw0rd1234";
-
 
 	
 	
@@ -25,7 +20,7 @@ public class DaoService {
          ConnectionManager cm = new ConnectionManager();
 		 Connection conn = cm.getConnection();
 
-         try /*(Connection connection = DriverManager.getConnection(url, user, password))*/ {
+         try {
              String sql = "SELECT * FROM service ORDER BY serviceID";
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(sql);
@@ -52,7 +47,7 @@ public class DaoService {
          ConnectionManager cm = new ConnectionManager();
 		 Connection conn = cm.getConnection();
 		 
-         try /*(Connection connection = DriverManager.getConnection(url, user, password))*/ {
+         try  {
              String sql = "SELECT serviceID, serviceName, serviceType, serviceFees FROM service where serviceID='" +serviceID+ "';";
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(sql);

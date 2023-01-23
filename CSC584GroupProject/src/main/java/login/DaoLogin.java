@@ -14,9 +14,7 @@ import user.User;
 import login.Login;
 
 public class DaoLogin {
-//	public static String url = "jdbc:mysql:/csc584";
-//    public static String user = "root";
-//    public static String password = "p@ssw0rd1234";
+
     public String message = null;
      
     
@@ -56,14 +54,7 @@ public class DaoLogin {
 			ArrayList<Login> arrlogin = new ArrayList<Login>();
 			
 			try {
-//				try {
-//					Class.forName("com.mysql.cj.jdbc.Driver");
-//				} catch (ClassNotFoundException e) {
-//					
-//					e.printStackTrace();
-//					
-//				}
-//				Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+
 				 ConnectionManager cm = new ConnectionManager();
 				 Connection conn = cm.getConnection();
 				 
