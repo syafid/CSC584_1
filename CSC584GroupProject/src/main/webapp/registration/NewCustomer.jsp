@@ -16,7 +16,7 @@
 <h1>New Customer Registration</h1>
 <div class="card">
  <div class="card-body">
- <form action="RegisterCustomerServlet" method="post">
+ <form action="/CSC584GroupProject/RegisterCustomerServlet" method="POST">
  <div class="form-group row"> 
  	<label for="custName" class="col-sm-3 col-form-label">Full Name</label>
  	<input type="text" name="custName" size="50" maxlength="50" required="required">
@@ -42,7 +42,7 @@
  
   <div class="form-group row"> 
  	<label for="custEmail" class="col-sm-3 col-form-label">Email</label>
- 	<input type="email" name="custEmail" size="20" maxlength="20" required="required"><p class="text-danger">* This email will be use to login Service Appointment System</p>
+ 	<input type="email" name="custEmail" size="50" maxlength="50" required="required"><p class="text-danger">* This email will be use to login Service Appointment System</p>
  </div>
  
   <div class="form-group row"> 

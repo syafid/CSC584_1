@@ -117,6 +117,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>RegisterCustomerServlet</servlet-name>
-    <url-pattern>/customer/RegisterCustomerServlet</url-pattern>
+    <url-pattern>/RegisterCustomerServlet</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -17,7 +17,6 @@ import car.DaoCar;
 /**
  * Servlet implementation class CustomerServlet
  */
-//@WebServlet("/RegisterCustomerServlet")
 public class RegisterCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

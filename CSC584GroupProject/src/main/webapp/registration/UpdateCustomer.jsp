@@ -14,7 +14,7 @@
 <body>
 <%DaoCust cust = new DaoCust(); %>
 <div class="container">
-<h1>New Customer Registration</h1>
+<h1>Update Customer Information</h1>
 <div class="card">
  <div class="card-body">
  <form action="UpdateCustomerServlet" method="POST">
@@ -50,7 +50,7 @@
  
   <div class="form-group row"> 
  	<label for="custEmail" class="col-sm-3 col-form-label">Email</label>
- 	<input type="email" name="custEmail" value="<%=CustList.get(0).getCusEmail() %>" disabled>
+ 	<input type="email" name="custEmail" size="50" value="<%=CustList.get(0).getCusEmail() %>" disabled>
  	<input type="hidden" name="custEmail" value="<%=CustList.get(0).getCusEmail()%>" >
  </div>
  
