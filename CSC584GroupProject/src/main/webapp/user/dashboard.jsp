@@ -50,7 +50,7 @@
           <span class="nav-item">Dashboard</span>
         </a></li>
         
-        <li><a href="#">
+        <li><a href="report1">
           <i class="fas fa-database"></i>
           <span class="nav-item">Report</span>
         </a></li>
